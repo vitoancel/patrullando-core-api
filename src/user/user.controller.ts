@@ -1,24 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,Res, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserResponse } from './responses/create-user.response';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);;
-  }
+  async create(@Body() createUserDto: CreateUserDto) {
 
-  @Get(':nombre_usuario')
-  findOne(@Param('nombre_usuario') nombre_usuario: string) {
-    return this.userService.findOne(nombre_usuario);
-  }
+    let userWasCreated = await this.userService.create(createUserDto);
+    let response = new CreateUserResponse();
 
-  @Get()
-  findAll(@Param('nombre_usuario') nombre_usuario: string) {
-    return this.userService.findAll();
+    if (!userWasCreated) {
+      response.status = false;
+      response.message = "Usuario o correo ya existe."
+      console.log({response})
+      return response; 
+    }
+
+    response.message = "Usuario creado con éxito."
+    console.log({response})
+    return response;
   }
   
 }
