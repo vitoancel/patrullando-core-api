@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PlanService } from './plan.service';
 import { CreatePlanDto } from './dto/create-plan.dto';
 import { UpdatePlanDto } from './dto/update-plan.dto';
+import { AllPlansResponse } from './responses/all-plans.response';
 
 @Controller('plan')
 export class PlanController {
@@ -13,8 +14,12 @@ export class PlanController {
   }
 
   @Get()
-  findAll() {
-    return this.planService.findAll();
+  async findAll() {
+    let response = new AllPlansResponse()
+
+    response.data = await this.planService.findAll();
+
+    return response;
   }
 
   @Get(':id')
