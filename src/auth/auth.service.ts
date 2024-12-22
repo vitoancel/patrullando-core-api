@@ -2,30 +2,44 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { encryptText } from 'src/utils/encrypt';
+import { UserRoleService } from 'src/user-role/user-role.service';
+import { LoginResponse } from './responses/login.response';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
+    private userRoleService: UserRoleService,
     private jwtService: JwtService
   ) {}
 
-  async signIn(
+  async LogIn(
     username: string,
     pass: string,
-  ): Promise<{ access_token: string }> {
+  ): Promise<LoginResponse> {
+
+    let response = new LoginResponse()
 
     const user = await this.userService.findOne(username);
     
     if (user?.password !== encryptText(pass)) {
-      throw new UnauthorizedException();
+
+      response.status = false;
+      response.message = "Usuario o Contraseña incorrecta."
+
+      return response;
     }
 
-    const payload = { sub: user.id, username: user.username };
-
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
     
+    let userRole = await this.userRoleService.findRoleByUSer(user.id)
+    
+    console.log({role:userRole})
+    const payload = { user_id: user.id, user_name: user.username, email: user.email, role_id : userRole.id , role_name : userRole.name};
+
+    response.message = "¡Login Exitoso!"
+    response.data = await this.jwtService.signAsync(payload)
+
+    return response;
+
   }
 }

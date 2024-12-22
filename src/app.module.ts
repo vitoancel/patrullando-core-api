@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsuarioModule } from './usuario/usuario.module';
 import { UserController } from './user/user.controller';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DatabaseModule } from './database/database.module';
-import { UserEntity } from './user/entities/user.entity';
+import { PermissionModule } from './permission/permission.module';
+import { UserRoleModule } from './user-role/user-role.module';
+import { RoleModule } from './role/role.module';
+import { PlanModule } from './plan/plan.module';
 
 @Module({
   imports: [
-    UsuarioModule, 
     AuthModule, 
     UserModule,
     TypeOrmModule.forRoot({
@@ -21,11 +21,17 @@ import { UserEntity } from './user/entities/user.entity';
       username: 'postgres',
       password: 'Lezama26+',
       database: 'patrullando_db',
-      entities: [UserEntity],
-      autoLoadEntities: true,
+      entities: [
+        //__dirname + '/../**/*.entity.ts',
+        //UserEntity,RoleEntity,PermissionEntity,
+        'dist/**/*.entity.js'
+      ],
       synchronize: true,
     }),
-    DatabaseModule,
+    PermissionModule,
+    UserRoleModule,
+    RoleModule,
+    PlanModule
   ],
   controllers: [AppController, UserController],
   providers: [AppService],

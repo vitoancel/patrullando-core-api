@@ -1,19 +1,16 @@
 import { UserRoleEntity } from 'src/user-role/entities/user-role.entity';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 
-@Entity({ name: 'tb_user' })
-export class UserEntity {
+@Entity({ name: 'tb_role' })
+export class RoleEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ unique: true, length: 255 })
-  username: string;
+  name: string;
 
-  @Column({ length: 255 })
-  password: string;
-
-  @Column({ unique: true, length: 255 })
-  email: string;
+  @Column({ nullable: true })
+  description: string;
 
   @Column({ default: 1 })
   status: number;
@@ -37,6 +34,6 @@ export class UserEntity {
   deletion_user: number;
 
   // Relación con UserRoleEntity
-  @OneToMany(() => UserRoleEntity, (userRole) => userRole.user)
+  @OneToMany(() => UserRoleEntity, (userRole) => userRole.role)
   userRoles: UserRoleEntity[];
 }
