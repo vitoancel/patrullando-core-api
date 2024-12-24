@@ -12,8 +12,8 @@ export class UserEntity {
   @Column({ length: 255 })
   password: string;
 
-  @Column({ unique: true, length: 255 })
-  email: string;
+  @Column({ unique: true, length: 20 })
+  phone_number: string;
 
   @Column({ default: 1 })
   status: number;

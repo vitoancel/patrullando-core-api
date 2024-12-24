@@ -26,8 +26,12 @@ export class UserService {
   
   async create(createUserDto: CreateUserDto): Promise<Boolean> {
 
-    let alreadyExist = await this.userRepository.findOneBy({username:createUserDto.username, email: createUserDto.email});
-
+    let alreadyExist = await this.userRepository.findOne({
+                                                            where: [
+                                                              { username: createUserDto.username },
+                                                              { phone_number: createUserDto.phone_number },
+                                                            ],
+                                                          });
     if(alreadyExist){
       return false
     }
@@ -37,13 +41,13 @@ export class UserService {
       // Creating a new user
       let passswordEncrypted = encryptText(createUserDto.password)
 
-      let userObj       = new UserEntity()
-      userObj.username  = createUserDto.username
-      userObj.email     = createUserDto.email
-      userObj.password  = passswordEncrypted
+      let userObj           = new UserEntity()
+      userObj.username      = createUserDto.username
+      userObj.phone_number  = createUserDto.phone_number
+      userObj.password      = passswordEncrypted
 
-      let newUser       = this.userRepository.create(userObj);
-      let userDb        = await this.userRepository.save(newUser);
+      let newUser           = this.userRepository.create(userObj);
+      let userDb            = await this.userRepository.save(newUser);
 
       // Asign free role to new user
       let user_roleObj      = new UserRoleEntity()

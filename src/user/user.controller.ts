@@ -15,13 +15,13 @@ export class UserController {
 
     if (!userWasCreated) {
       response.status = false;
-      response.message = "Usuario o correo ya existe."
-      console.log({response})
+      response.message = "Usuario o telefono ya existe."
+      
       return response; 
     }
 
     response.message = "Usuario creado con éxito."
-    console.log({response})
+    
     return response;
   }
   
