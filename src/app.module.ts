@@ -9,6 +9,8 @@ import { PermissionModule } from './permission/permission.module';
 import { UserRoleModule } from './user-role/user-role.module';
 import { RoleModule } from './role/role.module';
 import { PlanModule } from './plan/plan.module';
+import { ExamModule } from './exam/exam.module';
+import { ExamMasterModule } from './exam-master/exam-master.module';
 
 @Module({
   imports: [
@@ -31,7 +33,9 @@ import { PlanModule } from './plan/plan.module';
     PermissionModule,
     UserRoleModule,
     RoleModule,
-    PlanModule
+    PlanModule,
+    ExamModule,
+    ExamMasterModule
   ],
   controllers: [AppController, UserController],
   providers: [AppService],
