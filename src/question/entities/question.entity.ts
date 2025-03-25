@@ -47,4 +47,10 @@ export class QuestionEntity {
 
   @OneToMany(() => OptionEntity, (option) => option.question) // Add this line
   options: OptionEntity[]; // Add this line
+
+  @Column({ type: 'text', default: '', nullable: false })
+  theory_helps: string;
+
+  @Column({ type: 'varchar', default: '0', length: 255, nullable: false })
+  ref_code: string;
 }

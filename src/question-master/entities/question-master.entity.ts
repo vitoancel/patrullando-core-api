@@ -28,4 +28,10 @@ export class QuestionMasterEntity {
 
   @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   update_date: Date;
+
+  @Column({ type: 'text' })
+  theory_helps: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  ref_code: string;
 }
