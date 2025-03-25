@@ -11,6 +11,10 @@ import { RoleModule } from './role/role.module';
 import { PlanModule } from './plan/plan.module';
 import { ExamModule } from './exam/exam.module';
 import { ExamMasterModule } from './exam-master/exam-master.module';
+import { QuestionModule } from './question/question.module';
+import { OptionModule } from './option/option.module';
+import { QuestionMasterModule } from './question-master/question-master.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -35,7 +39,11 @@ import { ExamMasterModule } from './exam-master/exam-master.module';
     RoleModule,
     PlanModule,
     ExamModule,
-    ExamMasterModule
+    ExamMasterModule,
+    QuestionModule,
+    OptionModule,
+    QuestionMasterModule,
+    CategoryModule
   ],
   controllers: [AppController, UserController],
   providers: [AppService],

@@ -3,6 +3,7 @@ import { ExamMasterService } from './exam-master.service';
 import { CreateExamMasterDto } from './dto/create-exam-master.dto';
 import { UpdateExamMasterDto } from './dto/update-exam-master.dto';
 import { ListExamMasterDto } from './dto/list-exam-master.dto';
+import { AllExamsMasterResponse } from './responses/all-exams-master.response';
 
 @Controller('exam-master')
 export class ExamMasterController {
@@ -14,8 +15,12 @@ export class ExamMasterController {
   }
 
   @Get()
-  findAll(@Body() listExamMaster: ListExamMasterDto) {
-    return this.examMasterService.findAll(listExamMaster);
+  async findAll(@Body() listExamMaster: ListExamMasterDto) {
+    let response = new AllExamsMasterResponse()
+
+    response.data = await this.examMasterService.findAll(listExamMaster);
+
+    return response;
   }
 
   @Get(':id')

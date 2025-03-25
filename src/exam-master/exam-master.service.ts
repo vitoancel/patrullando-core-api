@@ -5,7 +5,6 @@ import { ListExamMasterDto } from './dto/list-exam-master.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExamMasterEntity } from './entities/exam-master.entity';
 import { FindManyOptions, Repository } from 'typeorm';
-import { ExamMasterInterface } from './interfaces/exam-master.interface';
 
 @Injectable()
 export class ExamMasterService {
@@ -20,18 +19,16 @@ export class ExamMasterService {
   }
 
   async findAll(listExamMaster: ListExamMasterDto) {
-    console.log(listExamMaster)
-   
-    const { page = 1, limit = 10, sort=null } = listExamMaster;
+
+    const { page = 1, limit = 10, sort = null, filters = null } = listExamMaster;
 
     // Construir opciones de búsqueda
     const options: FindManyOptions<ExamMasterEntity> = {
       skip: (page - 1) * limit,
       take: limit,
       order: sort ? sort : undefined,
-    };
-
-    console.log(options)
+      where: filters ? filters : undefined
+  };
 
     return await this.examMasterRepository.find(options);
   }
