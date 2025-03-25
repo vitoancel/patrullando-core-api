@@ -17,7 +17,7 @@ export class QuestionMasterEntity {
   @Column({ type: 'smallint', default: 1 })
   question_type: number;
 
-  @Column({ type: 'integer' })
+  @Column({ type: 'integer', default: 1  })
   score: number;
 
   @Column({ type: 'smallint', default: 1 })
@@ -29,9 +29,9 @@ export class QuestionMasterEntity {
   @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   update_date: Date;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', default: '', nullable: false })
   theory_helps: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', default: '0', length: 255, nullable: false })
   ref_code: string;
 }
