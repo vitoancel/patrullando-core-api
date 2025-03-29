@@ -12,6 +12,7 @@ import {
   import { LoginResponse } from './responses/login.response';
   import { AuthGuard } from './auth.guard';
   import { AuthService } from './auth.service';
+  import { Response } from 'express';
   
   @Controller('auth')
   export class AuthController {
