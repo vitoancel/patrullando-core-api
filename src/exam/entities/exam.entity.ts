@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn ,ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn,Index, CreateDateColumn, UpdateDateColumn ,ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { UserEntity } from '../../user/entities/user.entity';
 import { QuestionEntity } from '../../question/entities/question.entity';
+import { ExamMasterEntity } from 'src/exam-master/entities/exam-master.entity';
 @Entity({ name: 'tb_exam' })
 export class ExamEntity {
     @PrimaryGeneratedColumn()
@@ -43,6 +44,13 @@ export class ExamEntity {
     @Column({ type: 'integer', default: 0 })
     incorrect_questions: number;
 
+    @Index('master_id_exam')
+    @ManyToOne(() => ExamMasterEntity)
+    @JoinColumn({ name: 'master_id' })
+    master: ExamMasterEntity;
+
     @OneToMany(() => QuestionEntity, (question) => question.exam) // Add this line
     questions: QuestionEntity[]; // Add this line
+
+    
   }

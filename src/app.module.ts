@@ -22,10 +22,10 @@ import { CategoryModule } from './category/category.module';
     UserModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'Lezama26+',
+      host: 'db.patrullando.pe',
+      //port: 5432,
+      username: 'admin_db',
+      password: 'P@t4ull@nd0_s3rv3r',
       database: 'patrullando_db',
       entities: [
         //__dirname + '/../**/*.entity.ts',

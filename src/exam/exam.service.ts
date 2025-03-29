@@ -3,11 +3,12 @@
   import { UpdateExamDto } from './dto/update-exam.dto';
   import { InjectConnection , InjectRepository} from '@nestjs/typeorm';
   import { ExamEntity } from './entities/exam.entity';
-  import { Connection, FindManyOptions, Repository } from 'typeorm';
-  import { QuestionEntity } from 'src/question/entities/question.entity';
+  import { Connection, FindManyOptions, Repository  } from 'typeorm';
   import { OptionEntity } from 'src/option/entities/option.entity';
-import { UserService } from 'src/user/user.service';
-import { QuestionService } from 'src/question/question.service';
+import { NewExamResponse } from './responses/new-exam.response';
+import { OptionService } from 'src/option/option.service';
+import { UpdateExamResponse } from './responses/update-exam.response';
+import { ListQuestionDto } from 'src/question/dto/list-question.dto';
 
   @Injectable()
   export class ExamService {
@@ -17,41 +18,98 @@ import { QuestionService } from 'src/question/question.service';
     constructor(
       @InjectConnection() private connection: Connection,
       @InjectRepository(ExamEntity)
-      private readonly examRepository: Repository<ExamEntity>
+      private readonly examRepository: Repository<ExamEntity>,
+      private optionService: OptionService,
     ) {}
 
-    async create(createExamDto: CreateExamDto) {
+    async create(createExamDto: CreateExamDto, user:any) {
+      let response = new NewExamResponse()
       try {
+        
+
         let exam_master_id = createExamDto.exam_master_id;
-        let user_id = 11;
+        let user_id = user.user_id;
         let exam_id = null;
         console.log({exam_master_id,user_id,exam_id})
 
-        const result = await this.connection.query(
+        const creation_result = await this.connection.query(
         'call create_exam($1, $2, $3);',[exam_master_id,user_id,exam_id]
         );
 
-        console.log({result})
+        response.status = true;
+        response.message = 'Exam created successfully';
+        response.data = await this.findExamWithQuestionsAndOptions(creation_result[0].created_exam_id);
 
-        let result2 = this.findExamWithQuestionsAndOptions(result[0].created_exam_id);
-
-        return result2;
+        return response;
       } catch (error) {
         this.logger.error(`Error executing stored procedure: ${error.message}`, error.stack);
-        throw error; // Re-throw the error so NestJS can handle it
+
+        response.status = false
+        response.message = 'Error creating exam';
+        return response;
       }
     }
 
-    findAll() {
-      return `This action returns all exam`;
+    async findAll(listQuestionDto: ListQuestionDto) {
+      const { page = 1, limit = 10, sort = null, filters = null } = listQuestionDto;
+      
+      // Construir opciones de búsqueda
+      const options: FindManyOptions<ExamEntity> = {
+        skip: (page - 1) * limit,
+        take: limit,
+        order: sort ? sort : undefined,
+        where: filters ? filters : undefined
+      };
+  
+      return await this.examRepository.find(options);
     }
 
-    findOne(id: number) {
-      return `This action returns a #${id} exam`;
+    async findOne(id: number) {
+
+      let  response = new UpdateExamResponse();
+
+      const exam_updated = await this.examRepository.findOne({
+        where: { id: id }
+      });
+      
+      response.status = true;
+      response.message = `This action returns a #${id} exam`;
+      response.data = exam_updated;
+      return response;
     }
 
-    update(id: number, updateExamDto: UpdateExamDto) {
-      return `This action updates a #${id} exam`;
+    async update(id: number, updateExamDto: UpdateExamDto, user:any) {
+
+      let  response = new UpdateExamResponse();
+
+      if (!updateExamDto.options || updateExamDto.options.length === 0) {
+        response.status = false;
+        response.message = "No options provided for update.";
+        return response;
+      }
+
+      // Obtener todas las opciones por sus IDs desde la BD
+      const optionIds = updateExamDto.options.map(opt => opt.id);
+      const existingOptions = await this.optionService.findByIds(optionIds);
+
+      if (existingOptions.length !== updateExamDto.options.length) {
+        response.status = false;
+        response.message = "Some options were not found.";
+        return response;
+      }
+
+      await this.optionService.updateMasive(updateExamDto.options);
+
+      const update_result = await this.connection.query(
+        'call update_exam_results($1);',[id]
+        );
+
+      
+
+      response.status = true;
+      response.message = `Updated ${updateExamDto.options.length} options successfully`;
+      
+      return response;
     }
 
     remove(id: number) {
@@ -61,11 +119,11 @@ import { QuestionService } from 'src/question/question.service';
 
 
     //////////////////////////////////////////
-    async findExamWithQuestionsAndOptions(examId: number): Promise<ExamEntity | undefined> {
+    async findExamWithQuestionsAndOptions(examId: number): Promise<ExamEntity> {
       try {
         const exam = await this.examRepository.findOne({
           where: { id: examId },
-          relations: ['questions', 'questions.options'], // Load questions and their options
+          relations: ['questions','master','questions.category', 'questions.options' ], // Load questions and their options
         });
   
         return exam;

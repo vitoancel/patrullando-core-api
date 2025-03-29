@@ -10,6 +10,7 @@ import { OptionEntity } from 'src/option/entities/option.entity';
 
 @Module({
   imports: [
+    OptionModule,
     TypeOrmModule.forFeature([ExamEntity]), // Register your entities
   ],
   controllers: [ExamController],

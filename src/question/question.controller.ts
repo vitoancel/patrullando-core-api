@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
+import { ListQuestionDto } from './dto/list-question.dto';
+import { AllQuestionsResponse } from './responses/all-questions.response';
 
 @Controller('question')
 export class QuestionController {
@@ -13,8 +15,13 @@ export class QuestionController {
   }
 
   @Get()
-  findAll() {
-    return this.questionService.findAll();
+  async findAll(@Body() listQuestionDto: ListQuestionDto) {
+   
+    let response = new AllQuestionsResponse()
+    
+    response.data = await this.questionService.findAll(listQuestionDto);
+    response.message = 'Questions found successfully';
+    return response;
   }
 
   @Get(':id')
