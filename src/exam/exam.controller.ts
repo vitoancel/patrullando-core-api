@@ -25,6 +25,15 @@ export class ExamController {
     return response;
   }
 
+  @Get('by-user')
+  async findAllByUser(@Body() listExamDto: ListExamDto, @Request() req) {
+    let response = new AllExamsResponse()
+
+    response.data = await this.examService.findAllByUser(listExamDto,req.user.user_id);
+    response.message = 'Exams found successfully';
+    return response;
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.examService.findOne(+id);

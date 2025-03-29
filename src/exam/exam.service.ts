@@ -60,6 +60,25 @@ import { ListQuestionDto } from 'src/question/dto/list-question.dto';
         order: sort ? sort : undefined,
         where: filters ? filters : undefined
       };
+
+      console.log({options})
+  
+      return await this.examRepository.find(options);
+    }
+
+    async findAllByUser(listQuestionDto: ListQuestionDto, userId : number) {
+      
+      let { page = 1, limit = 10, sort = null, filters = null } = listQuestionDto;
+
+      // Construir opciones de búsqueda
+      const options: FindManyOptions<ExamEntity> = {
+        skip: (page - 1) * limit,
+        take: limit,
+        order: sort ? sort : undefined,
+        where: {user:{id:userId}}
+      };
+
+      console.log({options})
   
       return await this.examRepository.find(options);
     }
@@ -81,12 +100,6 @@ import { ListQuestionDto } from 'src/question/dto/list-question.dto';
     async update(id: number, updateExamDto: UpdateExamDto, user:any) {
 
       let  response = new UpdateExamResponse();
-
-      if (!updateExamDto.options || updateExamDto.options.length === 0) {
-        response.status = false;
-        response.message = "No options provided for update.";
-        return response;
-      }
 
       // Obtener todas las opciones por sus IDs desde la BD
       const optionIds = updateExamDto.options.map(opt => opt.id);
