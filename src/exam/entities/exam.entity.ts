@@ -13,22 +13,6 @@ export class ExamEntity {
     start_date: Date;
   
     @Column({ type: 'timestamp', nullable: true })
-    @Transform(({ value }) => {
-      if (value instanceof Date) {
-        const day = String(value.getDate()).padStart(2, '0');
-        const month = String(value.getMonth() + 1).padStart(2, '0');
-        const year = value.getFullYear();
-        let hours = value.getHours();
-        const minutes = String(value.getMinutes()).padStart(2, '0');
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // La hora '0' debe ser '12'
-        const hoursStr = String(hours).padStart(2, '0');
-  
-        return `${day}/${month}/${year} ${hoursStr}:${minutes} ${ampm}`;
-      }
-      return value;
-    })
     end_date: Date;
   
     @Column({ type: 'integer', nullable: true })
@@ -45,6 +29,9 @@ export class ExamEntity {
   
     @Column({ type: 'integer', nullable: true  })
     user_id: number;
+
+    @Column({ type: 'integer', nullable: false, default: 55   })
+    min_score: number;
   
     @ManyToOne(() => UserEntity)
     @JoinColumn({ name: 'user_id' })

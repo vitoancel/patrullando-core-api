@@ -8,6 +8,7 @@ export interface ExamInterface {
     updateDate: string;
     userId: number;
     score: number;
+    min_score: number;
     pendingQuestions: number;
     correctQuestions: number;
     incorrectQuestions: number;

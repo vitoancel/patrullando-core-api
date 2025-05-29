@@ -15,6 +15,7 @@ import { QuestionModule } from './question/question.module';
 import { OptionModule } from './option/option.module';
 import { QuestionMasterModule } from './question-master/question-master.module';
 import { CategoryModule } from './category/category.module';
+import { PracticeModule } from './practice/practice.module';
 
 @Module({
   imports: [
@@ -43,7 +44,8 @@ import { CategoryModule } from './category/category.module';
     QuestionModule,
     OptionModule,
     QuestionMasterModule,
-    CategoryModule
+    CategoryModule,
+    PracticeModule
   ],
   controllers: [AppController, UserController],
   providers: [AppService],

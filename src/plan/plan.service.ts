@@ -19,7 +19,11 @@ export class PlanService {
   }
 
   async findAll() {
-    return await this.planRepository.find();
+    return await this.planRepository.find({
+      order: {
+        id: "ASC"
+      }
+    });
   }
 
   findOne(id: number) {

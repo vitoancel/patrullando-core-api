@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,UseGuards } from '@nestjs/common';
 import { ExamMasterService } from './exam-master.service';
 import { CreateExamMasterDto } from './dto/create-exam-master.dto';
 import { UpdateExamMasterDto } from './dto/update-exam-master.dto';
 import { ListExamMasterDto } from './dto/list-exam-master.dto';
 import { AllExamsMasterResponse } from './responses/all-exams-master.response';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('exam-master')
 export class ExamMasterController {
   constructor(private readonly examMasterService: ExamMasterService) {}

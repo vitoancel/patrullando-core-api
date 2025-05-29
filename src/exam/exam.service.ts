@@ -1,10 +1,9 @@
-  import { Injectable, Logger } from '@nestjs/common';
-  import { CreateExamDto } from './dto/create-exam.dto';
-  import { UpdateExamDto } from './dto/update-exam.dto';
-  import { InjectConnection , InjectRepository} from '@nestjs/typeorm';
-  import { ExamEntity } from './entities/exam.entity';
-  import { Connection, FindManyOptions, Repository  } from 'typeorm';
-  import { OptionEntity } from 'src/option/entities/option.entity';
+import { Injectable, Logger } from '@nestjs/common';
+import { CreateExamDto } from './dto/create-exam.dto';
+import { UpdateExamDto } from './dto/update-exam.dto';
+import { InjectConnection , InjectRepository} from '@nestjs/typeorm';
+import { ExamEntity } from './entities/exam.entity';
+import { Connection, FindManyOptions, Repository, Not, IsNull  } from 'typeorm';
 import { NewExamResponse } from './responses/new-exam.response';
 import { OptionService } from 'src/option/option.service';
 import { UpdateExamResponse } from './responses/update-exam.response';
@@ -75,7 +74,8 @@ import { ListQuestionDto } from 'src/question/dto/list-question.dto';
         skip: (page - 1) * limit,
         take: limit,
         order: sort ? sort : undefined,
-        where: {user:{id:userId}}
+        where: {user:{id:userId}, end_date:Not(IsNull())},
+        relations: ['master']
       };
 
       console.log({options})
@@ -88,7 +88,8 @@ import { ListQuestionDto } from 'src/question/dto/list-question.dto';
       let  response = new UpdateExamResponse();
 
       const exam_updated = await this.examRepository.findOne({
-        where: { id: id }
+        where: { id: id },
+        relations: ['master']
       });
       
       response.status = true;

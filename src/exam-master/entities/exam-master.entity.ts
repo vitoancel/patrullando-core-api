@@ -17,6 +17,9 @@ export class ExamMasterEntity {
   @Column({ type: 'smallint', default: 1 })
   status: number;
 
+  @Column({ type: 'integer', nullable: false, default: 55   })
+  min_score: number;
+
   @CreateDateColumn({ type: 'timestamp', default: () => 'NOW()' })
   creation_date: Date;
 

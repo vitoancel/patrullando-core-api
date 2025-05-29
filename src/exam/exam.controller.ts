@@ -30,6 +30,7 @@ export class ExamController {
     let response = new AllExamsResponse()
 
     response.data = await this.examService.findAllByUser(listExamDto,req.user.user_id);
+
     response.message = 'Exams found successfully';
     return response;
   }

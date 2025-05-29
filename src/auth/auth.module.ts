@@ -14,7 +14,7 @@ import { UserRoleModule } from 'src/user-role/user-role.module';
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '8h' },
+      signOptions: { expiresIn: '1h' },
     }),
   ],
   providers: [AuthService],

@@ -17,8 +17,8 @@ export class PlanEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
   price: number;
 
-  @Column({ type: 'integer', default: 1 })
-  color: number;
+  @Column({ type: 'varchar', default: '#FFFF00' })
+  color: string;
 
   @Column({ type: 'integer', default: 1 })
   status: number;

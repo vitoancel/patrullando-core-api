@@ -12,7 +12,7 @@ export class UserEntity {
   @Column({ length: 255 })
   password: string;
 
-  @Column({ unique: true, length: 20 })
+  @Column({ unique: true, length: 36 })
   phone_number: string;
 
   @Column({ default: 1 })
