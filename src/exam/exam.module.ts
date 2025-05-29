@@ -7,10 +7,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ExamEntity } from './entities/exam.entity';
 import { QuestionEntity } from 'src/question/entities/question.entity';
 import { OptionEntity } from 'src/option/entities/option.entity';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
-    OptionModule,
+    OptionModule,AuthModule,
     TypeOrmModule.forFeature([ExamEntity]), // Register your entities
   ],
   controllers: [ExamController],

@@ -32,8 +32,7 @@ export class AuthService {
 
     
     let userRole = await this.userRoleService.findRoleByUSer(user.id)
-    
-    console.log({role:userRole})
+   
     const payload = { user_id: user.id, user_name: user.username, phone_number: user.phone_number, role_id : userRole.id , role_name : userRole.name};
 
     response.message = "¡Login Exitoso!"
@@ -41,5 +40,9 @@ export class AuthService {
 
     return response;
 
+  }
+
+  async getUserRole(userId){
+    return await this.userRoleService.findRoleByUSer(userId)
   }
 }
