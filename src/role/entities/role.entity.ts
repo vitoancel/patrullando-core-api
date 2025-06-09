@@ -1,4 +1,3 @@
-import { UserRoleEntity } from 'src/user-role/entities/user-role.entity';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 
 @Entity({ name: 'tb_role' })
@@ -33,7 +32,4 @@ export class RoleEntity {
   @Column({ nullable: true })
   deletion_user: number;
 
-  // Relación con UserRoleEntity
-  @OneToMany(() => UserRoleEntity, (userRole) => userRole.role)
-  userRoles: UserRoleEntity[];
 }

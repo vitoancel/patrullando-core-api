@@ -34,10 +34,10 @@ import { AuthService } from './auth.service';
         // 💡 We're assigning the payload to the request object here
         // so that we can access it in our route handlers
         console.log(payload)
-        let userRole = await this.authService.getUserRole(payload.user_id)
+        let userRole = await this.authService.getUserRole(payload.user_name)
     
         console.log(userRole)
-        if(userRole.id!=payload.role_id){          
+        if(userRole.role.id!=payload.role_id){          
           throw new UnauthorizedException();
         }
         request['user'] = payload;

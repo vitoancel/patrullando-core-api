@@ -1,5 +1,5 @@
-import { UserRoleEntity } from 'src/user-role/entities/user-role.entity';
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { RoleEntity } from 'src/role/entities/role.entity';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity({ name: 'tb_user' })
 export class UserEntity {
@@ -36,7 +36,12 @@ export class UserEntity {
   @Column({ nullable: true })
   deletion_user: number;
 
-  // Relación con UserRoleEntity
-  @OneToMany(() => UserRoleEntity, (userRole) => userRole.user)
-  userRoles: UserRoleEntity[];
+  @Column({ nullable: false })
+  role_id: number;
+
+
+  @ManyToOne(() => RoleEntity)
+    @JoinColumn({ name: 'role_id' })
+    role: RoleEntity;
+  
 }

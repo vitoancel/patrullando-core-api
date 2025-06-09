@@ -5,7 +5,6 @@ import { DataSource, Repository } from 'typeorm';
 import { encryptText } from 'src/utils/encrypt';
 import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRoleEntity } from 'src/user-role/entities/user-role.entity';
 import { ROLES } from 'src/utils/enums/roles';
 
 @Injectable()
@@ -14,15 +13,19 @@ export class UserService {
   constructor(
     private dataSource: DataSource,
     @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
-    @InjectRepository(UserRoleEntity)
-    private readonly userRoleRepository: Repository<UserRoleEntity>
+    private readonly userRepository: Repository<UserEntity>
   ) {}
 
   async findOne(username: string): Promise<UserEntity | undefined> {
     return this.userRepository.findOneBy({username:username});
   }
 
+  async findOneWithRole(username: string): Promise<UserEntity | undefined> {
+    return await this.userRepository.findOne({
+      where: { username: username },
+      relations: ['role']
+    });
+  }
   
   async create(createUserDto: CreateUserDto): Promise<Boolean> {
 
@@ -45,17 +48,10 @@ export class UserService {
       userObj.username      = createUserDto.username
       userObj.phone_number  = createUserDto.phone_number
       userObj.password      = passswordEncrypted
+      userObj.role_id       = ROLES.FREE
 
       let newUser           = this.userRepository.create(userObj);
       let userDb            = await this.userRepository.save(newUser);
-
-      // Asign free role to new user
-      let user_roleObj      = new UserRoleEntity()
-      user_roleObj.role_id  = ROLES.FREE
-      user_roleObj.user_id  = userDb.id
-
-      let newUserRole       = this.userRoleRepository.create(user_roleObj);
-      let userRoleDb        = await this.userRoleRepository.save(newUserRole);
 
       return true;
 

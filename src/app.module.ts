@@ -6,7 +6,6 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PermissionModule } from './permission/permission.module';
-import { UserRoleModule } from './user-role/user-role.module';
 import { RoleModule } from './role/role.module';
 import { PlanModule } from './plan/plan.module';
 import { ExamModule } from './exam/exam.module';
@@ -45,7 +44,6 @@ import { FormatsModule } from './formats/formats.module';
     }),
     UserModule,
     PermissionModule,
-    UserRoleModule,
     RoleModule,
     PlanModule,
     ExamModule,

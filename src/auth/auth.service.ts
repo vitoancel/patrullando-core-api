@@ -2,14 +2,12 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { encryptText } from 'src/utils/encrypt';
-import { UserRoleService } from 'src/user-role/user-role.service';
 import { LoginResponse } from './responses/login.response';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
-    private userRoleService: UserRoleService,
     private jwtService: JwtService
   ) {}
 
@@ -20,7 +18,7 @@ export class AuthService {
 
     let response = new LoginResponse()
 
-    const user = await this.userService.findOne(username);
+    const user = await this.userService.findOneWithRole(username);
     
     if (user?.password !== encryptText(pass)) {
 
@@ -31,9 +29,8 @@ export class AuthService {
     }
 
     
-    let userRole = await this.userRoleService.findRoleByUSer(user.id)
    
-    const payload = { user_id: user.id, user_name: user.username, phone_number: user.phone_number, role_id : userRole.id , role_name : userRole.name};
+    const payload = { user_id: user.id, user_name: user.username, phone_number: user.phone_number, role_id : user.role.id , role_name : user.role.name};
 
     response.message = "¡Login Exitoso!"
     response.data = await this.jwtService.signAsync(payload)
@@ -42,7 +39,7 @@ export class AuthService {
 
   }
 
-  async getUserRole(userId){
-    return await this.userRoleService.findRoleByUSer(userId)
+  async getUserRole(username){
+    return await this.userService.findOneWithRole(username)
   }
 }
