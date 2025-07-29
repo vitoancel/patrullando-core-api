@@ -17,7 +17,7 @@ export class RoleHistoryController {
 
   @Post()
   create(@Body() createRoleHistoryDto: CreateRoleHistoryDto) {
-    return this.roleHistoryService.create(createRoleHistoryDto);
+    return this.roleHistoryService.create();
   }
 
   @Get()
@@ -35,7 +35,7 @@ export class RoleHistoryController {
     @Param('id') id: string,
     @Body() updateRoleHistoryDto: UpdateRoleHistoryDto,
   ) {
-    return this.roleHistoryService.update(+id, updateRoleHistoryDto);
+    return this.roleHistoryService.update(+id);
   }
 
   @Delete(':id')

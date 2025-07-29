@@ -54,12 +54,8 @@ export class ExamController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: number,
-    @Body() updateExamDto: UpdateExamDto,
-    @Request() req,
-  ) {
-    return this.examService.update(id, updateExamDto, req.user);
+  update(@Param('id') id: number, @Body() updateExamDto: UpdateExamDto) {
+    return this.examService.update(id, updateExamDto);
   }
 
   @Delete(':id')

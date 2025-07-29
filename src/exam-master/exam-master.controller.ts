@@ -9,8 +9,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ExamMasterService } from './exam-master.service';
-import { CreateExamMasterDto } from './dto/create-exam-master.dto';
-import { UpdateExamMasterDto } from './dto/update-exam-master.dto';
 import { ListExamMasterDto } from './dto/list-exam-master.dto';
 import { AllExamsMasterResponse } from './responses/all-exams-master.response';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -21,8 +19,8 @@ export class ExamMasterController {
   constructor(private readonly examMasterService: ExamMasterService) {}
 
   @Post()
-  create(@Body() createExamMasterDto: CreateExamMasterDto) {
-    return this.examMasterService.create(createExamMasterDto);
+  create() {
+    return this.examMasterService.create();
   }
 
   @Get()
@@ -40,11 +38,8 @@ export class ExamMasterController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateExamMasterDto: UpdateExamMasterDto,
-  ) {
-    return this.examMasterService.update(+id, updateExamMasterDto);
+  update(@Param('id') id: string) {
+    return this.examMasterService.update(+id);
   }
 
   @Delete(':id')

@@ -3,7 +3,7 @@ import { CreateExamDto } from './dto/create-exam.dto';
 import { UpdateExamDto } from './dto/update-exam.dto';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { ExamEntity } from './entities/exam.entity';
-import { Connection, FindManyOptions, Repository, Not, IsNull } from 'typeorm';
+import { Connection, FindManyOptions, IsNull, Not, Repository } from 'typeorm';
 import { NewExamResponse } from './responses/new-exam.response';
 import { OptionService } from 'src/option/option.service';
 import { UpdateExamResponse } from './responses/update-exam.response';
@@ -74,12 +74,7 @@ export class ExamService {
   }
 
   async findAllByUser(listQuestionDto: ListQuestionDto, userId: number) {
-    const {
-      page = 1,
-      limit = 10,
-      sort = null,
-      filters = null,
-    } = listQuestionDto;
+    const { page = 1, limit = 10, sort = null } = listQuestionDto;
 
     // Construir opciones de búsqueda
     const options: FindManyOptions<ExamEntity> = {
@@ -109,7 +104,7 @@ export class ExamService {
     return response;
   }
 
-  async update(id: number, updateExamDto: UpdateExamDto, user: any) {
+  async update(id: number, updateExamDto: UpdateExamDto) {
     const response = new UpdateExamResponse();
 
     // Obtener todas las opciones por sus IDs desde la BD
@@ -124,10 +119,7 @@ export class ExamService {
 
     await this.optionService.updateMasive(updateExamDto.options);
 
-    const update_result = await this.connection.query(
-      'call update_exam_results($1);',
-      [id],
-    );
+    await this.connection.query('call update_exam_results($1);', [id]);
 
     response.status = true;
     response.message = `Updated ${updateExamDto.options.length} options successfully`;
@@ -142,7 +134,7 @@ export class ExamService {
   //////////////////////////////////////////
   async findExamWithQuestionsAndOptions(examId: number): Promise<ExamEntity> {
     try {
-      const exam = await this.examRepository.findOne({
+      return await this.examRepository.findOne({
         where: { id: examId },
         relations: [
           'questions',
@@ -151,8 +143,6 @@ export class ExamService {
           'questions.options',
         ], // Load questions and their options
       });
-
-      return exam;
     } catch (error) {
       this.logger.error(
         `Error fetching exam with questions and options: ${error.message}`,

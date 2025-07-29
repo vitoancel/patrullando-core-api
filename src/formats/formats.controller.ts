@@ -21,7 +21,7 @@ export class FormatsController {
 
   @Post()
   create(@Body() createFormatDto: CreateFormatDto) {
-    return this.formatsService.create(createFormatDto);
+    return this.formatsService.create();
   }
 
   @Get()
@@ -40,7 +40,7 @@ export class FormatsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFormatDto: UpdateFormatDto) {
-    return this.formatsService.update(+id, updateFormatDto);
+    return this.formatsService.update(+id);
   }
 
   @Delete(':id')

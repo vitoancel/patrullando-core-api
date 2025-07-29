@@ -3,8 +3,6 @@ import {
   Column,
   PrimaryGeneratedColumn,
   Index,
-  CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
   JoinColumn,
   OneToMany,
@@ -12,7 +10,6 @@ import {
 import { UserEntity } from '../../user/entities/user.entity';
 import { QuestionEntity } from '../../question/entities/question.entity';
 import { ExamMasterEntity } from 'src/exam-master/entities/exam-master.entity';
-import { Transform } from 'class-transformer';
 
 @Entity({ name: 'tb_exam' })
 export class ExamEntity {

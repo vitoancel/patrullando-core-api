@@ -1,7 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePlanDto } from './dto/create-plan.dto';
-import { UpdatePlanDto } from './dto/update-plan.dto';
-import { PlainObjectToNewEntityTransformer } from 'typeorm/query-builder/transformer/PlainObjectToNewEntityTransformer';
 import { PlanEntity } from './entities/plan.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,7 +10,7 @@ export class PlanService {
     private readonly planRepository: Repository<PlanEntity>,
   ) {}
 
-  create(createPlanDto: CreatePlanDto) {
+  create() {
     return 'This action adds a new plan';
   }
 
@@ -29,7 +26,7 @@ export class PlanService {
     return `This action returns a #${id} plan`;
   }
 
-  update(id: number, updatePlanDto: UpdatePlanDto) {
+  update(id: number) {
     return `This action updates a #${id} plan`;
   }
 

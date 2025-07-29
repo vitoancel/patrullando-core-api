@@ -2,12 +2,8 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  Index,
-  CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToMany,
 } from 'typeorm';
 import { UserEntity } from '../../user/entities/user.entity';
 import { ExamMasterEntity } from 'src/exam-master/entities/exam-master.entity';

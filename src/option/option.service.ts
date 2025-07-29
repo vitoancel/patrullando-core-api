@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOptionDto } from './dto/create-option.dto';
-import { UpdateOptionDto } from './dto/update-option.dto';
 import { OptionEntity } from './entities/option.entity';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
@@ -13,7 +11,7 @@ export class OptionService {
     private readonly optionRepository: Repository<OptionEntity>,
   ) {}
 
-  create(createOptionDto: CreateOptionDto) {
+  create() {
     return 'This action adds a new option';
   }
 
@@ -30,7 +28,7 @@ export class OptionService {
     return existingOptions;
   }
 
-  update(id: number, updateOptionDto: UpdateOptionDto) {
+  update(id: number) {
     return `This action updates a #${id} option`;
   }
 

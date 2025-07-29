@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePracticeDto } from './dto/create-practice.dto';
-import { UpdatePracticeDto } from './dto/update-practice.dto';
 import { PracticeEntity } from './entities/practice.entity';
 import { InjectRepository, InjectConnection } from '@nestjs/typeorm';
 import { Repository, Connection } from 'typeorm';
@@ -26,22 +25,22 @@ export class PracticeService {
       });
 
       if (!exams.length) {
-        const creation_result_practice_1 = await this.connection.query(
-          'call create_practice_1($1, $2);',
-          [exam_master_id, user_id],
-        );
-        const creation_result_practice_2 = await this.connection.query(
-          'call create_practice_2($1, $2);',
-          [exam_master_id, user_id],
-        );
-        const creation_result_practice_3 = await this.connection.query(
-          'call create_practice_3($1, $2);',
-          [exam_master_id, user_id],
-        );
-        const creation_result_practice_4 = await this.connection.query(
-          'call create_practice_4($1, $2);',
-          [exam_master_id, user_id],
-        );
+        await this.connection.query('call create_practice_1($1, $2);', [
+          exam_master_id,
+          user_id,
+        ]);
+        await this.connection.query('call create_practice_2($1, $2);', [
+          exam_master_id,
+          user_id,
+        ]);
+        await this.connection.query('call create_practice_3($1, $2);', [
+          exam_master_id,
+          user_id,
+        ]);
+        await this.connection.query('call create_practice_4($1, $2);', [
+          exam_master_id,
+          user_id,
+        ]);
 
         exams = await this.practiceRepository.find({
           where: { exam_master_id: exam_master_id, user_id: user_id },
@@ -70,7 +69,7 @@ export class PracticeService {
     return `This action returns a #${id} practice`;
   }
 
-  update(id: number, updatePracticeDto: UpdatePracticeDto) {
+  update(id: number) {
     return `This action updates a #${id} practice`;
   }
 

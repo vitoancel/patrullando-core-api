@@ -22,7 +22,7 @@ export class QuestionController {
 
   @Post()
   create(@Body() createQuestionDto: CreateQuestionDto) {
-    return this.questionService.create(createQuestionDto);
+    return this.questionService.create();
   }
 
   @Get()
@@ -44,7 +44,7 @@ export class QuestionController {
     @Param('id') id: string,
     @Body() updateQuestionDto: UpdateQuestionDto,
   ) {
-    return this.questionService.update(+id, updateQuestionDto);
+    return this.questionService.update(+id);
   }
 
   @Delete(':id')

@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateExamMasterDto } from './dto/create-exam-master.dto';
-import { UpdateExamMasterDto } from './dto/update-exam-master.dto';
 import { ListExamMasterDto } from './dto/list-exam-master.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExamMasterEntity } from './entities/exam-master.entity';
@@ -13,7 +11,7 @@ export class ExamMasterService {
     private readonly examMasterRepository: Repository<ExamMasterEntity>,
   ) {}
 
-  create(createExamMasterDto: CreateExamMasterDto) {
+  create() {
     return 'This action adds a new examMaster';
   }
 
@@ -40,7 +38,7 @@ export class ExamMasterService {
     return `This action returns a #${id} examMaster`;
   }
 
-  update(id: number, updateExamMasterDto: UpdateExamMasterDto) {
+  update(id: number) {
     return `This action updates a #${id} examMaster`;
   }
 

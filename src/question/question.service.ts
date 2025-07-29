@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateQuestionDto } from './dto/create-question.dto';
-import { UpdateQuestionDto } from './dto/update-question.dto';
 import { QuestionEntity } from './entities/question.entity';
 import { FindManyOptions, Repository } from 'typeorm';
 import { ListQuestionDto } from './dto/list-question.dto';
@@ -13,7 +11,7 @@ export class QuestionService {
     private readonly questionRepository: Repository<QuestionEntity>,
   ) {}
 
-  create(createQuestionDto: CreateQuestionDto) {
+  create() {
     return 'This action adds a new question';
   }
 
@@ -43,7 +41,7 @@ export class QuestionService {
     return `This action returns a #${id} question`;
   }
 
-  update(id: number, updateQuestionDto: UpdateQuestionDto) {
+  update(id: number) {
     return `This action updates a #${id} question`;
   }
 

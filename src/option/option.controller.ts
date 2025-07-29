@@ -17,7 +17,7 @@ export class OptionController {
 
   @Post()
   create(@Body() createOptionDto: CreateOptionDto) {
-    return this.optionService.create(createOptionDto);
+    return this.optionService.create();
   }
 
   @Get()
@@ -32,7 +32,7 @@ export class OptionController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOptionDto: UpdateOptionDto) {
-    return this.optionService.update(+id, updateOptionDto);
+    return this.optionService.update(+id);
   }
 
   @Delete(':id')

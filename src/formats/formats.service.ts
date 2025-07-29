@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFormatDto } from './dto/create-format.dto';
-import { UpdateFormatDto } from './dto/update-format.dto';
 import { FormatEntity } from './entities/format.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,7 +10,7 @@ export class FormatsService {
     private readonly formatRepository: Repository<FormatEntity>,
   ) {}
 
-  create(createFormatDto: CreateFormatDto) {
+  create() {
     return 'This action adds a new format';
   }
 
@@ -28,7 +26,7 @@ export class FormatsService {
     return `This action returns a #${id} format`;
   }
 
-  update(id: number, updateFormatDto: UpdateFormatDto) {
+  update(id: number) {
     return `This action updates a #${id} format`;
   }
 

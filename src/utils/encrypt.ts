@@ -1,5 +1,4 @@
-import { createCipheriv, randomBytes, scrypt, pbkdf2Sync } from 'crypto';
-import { promisify } from 'util';
+import { pbkdf2Sync } from 'crypto';
 
 export function encryptText(textToEncrypt) {
   //Salt para robusteser la clave
