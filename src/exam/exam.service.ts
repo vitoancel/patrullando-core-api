@@ -26,7 +26,6 @@ export class ExamService {
       const exam_master_id = createExamDto.exam_master_id;
       const user_id = user.user_id;
       const exam_id = null;
-      console.log({ exam_master_id, user_id, exam_id });
 
       const creation_result = await this.connection.query(
         'call create_exam($1, $2, $3);',
@@ -68,8 +67,6 @@ export class ExamService {
       where: filters ? filters : undefined,
     };
 
-    console.log({ options });
-
     return await this.examRepository.find(options);
   }
 
@@ -84,8 +81,6 @@ export class ExamService {
       where: { user: { id: userId }, end_date: Not(IsNull()) },
       relations: ['master'],
     };
-
-    console.log({ options });
 
     return await this.examRepository.find(options);
   }

@@ -28,10 +28,9 @@ export class AuthGuard implements CanActivate {
       });
       // 💡 We're assigning the payload to the request object here
       // so that we can access it in our route handlers
-      console.log(payload);
+
       const userRole = await this.authService.getUserRole(payload.user_name);
 
-      console.log(userRole);
       if (userRole.role.id != payload.role_id) {
         throw new UnauthorizedException();
       }

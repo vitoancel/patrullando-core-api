@@ -16,6 +16,8 @@ export class ExamMasterService {
   }
 
   async findAll(listExamMaster: ListExamMasterDto) {
+    console.log({ listExamMaster });
+
     const {
       page = 1,
       limit = 10,
@@ -30,6 +32,8 @@ export class ExamMasterService {
       order: sort ? sort : undefined,
       where: filters ? filters : undefined,
     };
+
+    console.log({ options });
 
     return await this.examMasterRepository.find(options);
   }

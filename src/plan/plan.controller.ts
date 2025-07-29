@@ -25,7 +25,6 @@ export class PlanController {
     const response: CreatePlanResponse = new CreatePlanResponse();
     const newPlan = await this.planService.create(createPlanRequest, req.user);
 
-    console.log(newPlan);
     if (!newPlan) {
       response.status = false;
       response.message = 'Ocurrió un error al crear el plan';
