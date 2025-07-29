@@ -9,8 +9,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { QuestionService } from './question.service';
-import { CreateQuestionDto } from './dto/create-question.dto';
-import { UpdateQuestionDto } from './dto/update-question.dto';
 import { ListQuestionDto } from './dto/list-question.dto';
 import { AllQuestionsResponse } from './responses/all-questions.response';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -21,7 +19,7 @@ export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}
 
   @Post()
-  create(@Body() createQuestionDto: CreateQuestionDto) {
+  create() {
     return this.questionService.create();
   }
 
@@ -40,10 +38,7 @@ export class QuestionController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateQuestionDto: UpdateQuestionDto,
-  ) {
+  update(@Param('id') id: string) {
     return this.questionService.update(+id);
   }
 

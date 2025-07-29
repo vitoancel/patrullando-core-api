@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { DataSource, FindManyOptions, Repository } from 'typeorm';
 import { encryptText } from 'src/utils/encrypt';
 import { UserEntity } from './entities/user.entity';
@@ -8,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ROLES } from 'src/utils/enums/roles';
 import { ListUsersWithSuscriptionDto } from './dto/list-users-with-suscription.dto';
 import { UserWithSuscriptionModel } from './models/user-with-suscription.mode';
-import { instanceToPlain, plainToInstance } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UserService {
@@ -50,9 +49,7 @@ export class UserService {
 
     const data = await this.userRepository.find(options);
 
-    const usersWithSubs = plainToInstance(UserWithSuscriptionModel, data);
-
-    return usersWithSubs;
+    return plainToInstance(UserWithSuscriptionModel, data);
   }
 
   async create(createUserDto: CreateUserDto): Promise<boolean> {
@@ -77,15 +74,16 @@ export class UserService {
       userObj.role_id = ROLES.FREE;
 
       const newUser = this.userRepository.create(userObj);
-      const userDb = await this.userRepository.save(newUser);
+      await this.userRepository.save(newUser);
 
       return true;
     } catch (error) {
+      console.log({ error: error.message });
       return false;
     }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(id: number) {
     return `This action updates a #${id} user`;
   }
 }

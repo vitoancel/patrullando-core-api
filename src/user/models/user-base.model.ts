@@ -35,7 +35,6 @@ export class UserBaseModel {
   @Expose()
   suscription_until;
 
-
   @Expose()
   role_id: number;
 

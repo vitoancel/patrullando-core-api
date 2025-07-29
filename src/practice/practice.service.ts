@@ -57,6 +57,9 @@ export class PracticeService {
       response.status = false;
       response.message = 'Error returns practices exams.';
       response.data = null;
+
+      console.log({ error: error.message });
+
       return response;
     }
   }

@@ -12,7 +12,9 @@ export class RoleHistoryService {
     private roleHistoryRepository: Repository<RoleHistoryEntity>,
   ) {}
 
-  async create(createRoleHistoryDto: CreateRoleHistoryDto): Promise<RoleHistoryEntity> {
+  async create(
+    createRoleHistoryDto: CreateRoleHistoryDto,
+  ): Promise<RoleHistoryEntity> {
     const roleHistory = this.roleHistoryRepository.create(createRoleHistoryDto);
     return this.roleHistoryRepository.save(roleHistory);
   }
@@ -28,25 +30,28 @@ export class RoleHistoryService {
       where: { id },
       relations: ['user', 'role', 'plan'],
     });
-    
+
     if (!roleHistory) {
       throw new NotFoundException(`Role history with ID ${id} not found`);
     }
-    
+
     return roleHistory;
   }
 
-  async update(id: number, updateRoleHistoryDto: UpdateRoleHistoryDto): Promise<RoleHistoryEntity> {
+  async update(
+    id: number,
+    updateRoleHistoryDto: UpdateRoleHistoryDto,
+  ): Promise<RoleHistoryEntity> {
     const roleHistory = await this.findOne(id);
-    
+
     Object.assign(roleHistory, updateRoleHistoryDto);
-    
+
     return this.roleHistoryRepository.save(roleHistory);
   }
 
   async remove(id: number): Promise<void> {
     const result = await this.roleHistoryRepository.delete(id);
-    
+
     if (result.affected === 0) {
       throw new NotFoundException(`Role history with ID ${id} not found`);
     }

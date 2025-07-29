@@ -9,7 +9,6 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { QuestionEntity } from '../../question/entities/question.entity';
 import { RoleHistoryEntity } from '../../role-history/entities/role-history.entity';
 
 @Entity({ name: 'tb_user' })
@@ -87,7 +86,7 @@ export class UserEntity {
       return null;
     }
 
-    const role_hisotry = this.role_history.find((x) => x.status == 1)
+    const role_hisotry = this.role_history.find((x) => x.status == 1);
 
     return role_hisotry.end_date;
   }

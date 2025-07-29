@@ -24,8 +24,7 @@ export class OptionService {
   }
 
   findByIds(optionIds: number[]) {
-    const existingOptions = this.optionRepository.findByIds(optionIds);
-    return existingOptions;
+    return this.optionRepository.findByIds(optionIds);
   }
 
   update(id: number) {

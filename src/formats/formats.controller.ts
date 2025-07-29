@@ -2,15 +2,12 @@ import {
   Controller,
   Get,
   Post,
-  Body,
   Patch,
   Param,
   Delete,
   UseGuards,
 } from '@nestjs/common';
 import { FormatsService } from './formats.service';
-import { CreateFormatDto } from './dto/create-format.dto';
-import { UpdateFormatDto } from './dto/update-format.dto';
 import { AllFormatsResponse } from './responses/all-formats.response';
 import { AuthGuard } from 'src/auth/auth.guard';
 
@@ -20,7 +17,7 @@ export class FormatsController {
   constructor(private readonly formatsService: FormatsService) {}
 
   @Post()
-  create(@Body() createFormatDto: CreateFormatDto) {
+  create() {
     return this.formatsService.create();
   }
 
@@ -39,7 +36,7 @@ export class FormatsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFormatDto: UpdateFormatDto) {
+  update(@Param('id') id: string) {
     return this.formatsService.update(+id);
   }
 

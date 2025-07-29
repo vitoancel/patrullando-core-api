@@ -12,7 +12,6 @@ import {
 import { PracticeService } from './practice.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { CreatePracticeDto } from './dto/create-practice.dto';
-import { UpdatePracticeDto } from './dto/update-practice.dto';
 
 @UseGuards(AuthGuard)
 @Controller('practice')

@@ -1,23 +1,13 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Patch, Param, Delete } from '@nestjs/common';
 import { QuestionMasterService } from './question-master.service';
-import { CreateQuestionMasterDto } from './dto/create-question-master.dto';
-import { UpdateQuestionMasterDto } from './dto/update-question-master.dto';
 
 @Controller('question-master')
 export class QuestionMasterController {
   constructor(private readonly questionMasterService: QuestionMasterService) {}
 
   @Post()
-  create(@Body() createQuestionMasterDto: CreateQuestionMasterDto) {
-    return this.questionMasterService.create(createQuestionMasterDto);
+  create() {
+    return this.questionMasterService.create();
   }
 
   @Get()
@@ -31,11 +21,8 @@ export class QuestionMasterController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateQuestionMasterDto: UpdateQuestionMasterDto,
-  ) {
-    return this.questionMasterService.update(+id, updateQuestionMasterDto);
+  update(@Param('id') id: string) {
+    return this.questionMasterService.update(+id);
   }
 
   @Delete(':id')
