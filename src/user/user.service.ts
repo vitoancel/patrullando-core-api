@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserRequest } from './requests/create-user.request';
 import { DataSource, FindManyOptions, Repository } from 'typeorm';
 import { encryptText } from 'src/utils/encrypt';
 import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ROLES } from 'src/utils/enums/roles';
-import { ListUsersWithSuscriptionDto } from './dto/list-users-with-suscription.dto';
+import { ListUsersWithSuscriptionRequest } from './requests/list-users-with-suscription.request';
 import { UserWithSuscriptionModel } from './models/user-with-suscription.mode';
 import { plainToInstance } from 'class-transformer';
 
@@ -29,7 +29,7 @@ export class UserService {
   }
 
   async findAllWithSuscription(
-    listUsersWithSuscription: ListUsersWithSuscriptionDto,
+    listUsersWithSuscription: ListUsersWithSuscriptionRequest,
   ): Promise<UserWithSuscriptionModel[]> {
     const {
       page = 1,
@@ -52,7 +52,7 @@ export class UserService {
     return plainToInstance(UserWithSuscriptionModel, data);
   }
 
-  async create(createUserDto: CreateUserDto): Promise<boolean> {
+  async create(createUserDto: CreateUserRequest): Promise<boolean> {
     const alreadyExist = await this.userRepository.findOne({
       where: [
         { username: createUserDto.username },

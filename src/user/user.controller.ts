@@ -1,16 +1,16 @@
 import { Controller, Post, Body, Get } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserRequest } from './requests/create-user.request';
 import { CreateUserResponse } from './responses/create-user.response';
 import { ListUsersWithSuscriptionResponse } from './responses/list-users-with-suscription.response';
-import { ListUsersWithSuscriptionDto } from './dto/list-users-with-suscription.dto';
+import { ListUsersWithSuscriptionRequest } from './requests/list-users-with-suscription.request';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserRequest) {
     const userWasCreated = await this.userService.create(createUserDto);
     const response = new CreateUserResponse();
 
@@ -28,7 +28,7 @@ export class UserController {
 
   @Get()
   async findAllWithSuscription(
-    @Body() listUsersWithSuscription: ListUsersWithSuscriptionDto,
+    @Body() listUsersWithSuscription: ListUsersWithSuscriptionRequest,
   ): Promise<ListUsersWithSuscriptionResponse> {
     const response = new ListUsersWithSuscriptionResponse();
     response.data = await this.userService.findAllWithSuscription(
