@@ -44,4 +44,7 @@ export class UserWithSuscriptionModel extends UserBaseModel {
 
   @Exclude()
   role_id;
+
+  @Exclude()
+  role_history;
 }

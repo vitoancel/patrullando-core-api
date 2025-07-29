@@ -1,24 +1,54 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { RoleHistoryEntity } from './entities/role-history.entity';
+import { CreateRoleHistoryDto } from './dto/create-role-history.dto';
+import { UpdateRoleHistoryDto } from './dto/update-role-history.dto';
 
 @Injectable()
 export class RoleHistoryService {
-  create() {
-    return 'This action adds a new roleHistory';
+  constructor(
+    @InjectRepository(RoleHistoryEntity)
+    private roleHistoryRepository: Repository<RoleHistoryEntity>,
+  ) {}
+
+  async create(createRoleHistoryDto: CreateRoleHistoryDto): Promise<RoleHistoryEntity> {
+    const roleHistory = this.roleHistoryRepository.create(createRoleHistoryDto);
+    return this.roleHistoryRepository.save(roleHistory);
   }
 
-  findAll() {
-    return `This action returns all roleHistory`;
+  async findAll(): Promise<RoleHistoryEntity[]> {
+    return this.roleHistoryRepository.find({
+      relations: ['user', 'role', 'plan'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} roleHistory`;
+  async findOne(id: number): Promise<RoleHistoryEntity> {
+    const roleHistory = await this.roleHistoryRepository.findOne({
+      where: { id },
+      relations: ['user', 'role', 'plan'],
+    });
+    
+    if (!roleHistory) {
+      throw new NotFoundException(`Role history with ID ${id} not found`);
+    }
+    
+    return roleHistory;
   }
 
-  update(id: number) {
-    return `This action updates a #${id} roleHistory`;
+  async update(id: number, updateRoleHistoryDto: UpdateRoleHistoryDto): Promise<RoleHistoryEntity> {
+    const roleHistory = await this.findOne(id);
+    
+    Object.assign(roleHistory, updateRoleHistoryDto);
+    
+    return this.roleHistoryRepository.save(roleHistory);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} roleHistory`;
+  async remove(id: number): Promise<void> {
+    const result = await this.roleHistoryRepository.delete(id);
+    
+    if (result.affected === 0) {
+      throw new NotFoundException(`Role history with ID ${id} not found`);
+    }
   }
 }

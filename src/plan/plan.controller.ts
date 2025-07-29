@@ -2,15 +2,12 @@ import {
   Controller,
   Get,
   Post,
-  Body,
   Patch,
   Param,
   Delete,
   UseGuards,
 } from '@nestjs/common';
 import { PlanService } from './plan.service';
-import { CreatePlanDto } from './dto/create-plan.dto';
-import { UpdatePlanDto } from './dto/update-plan.dto';
 import { AllPlansResponse } from './responses/all-plans.response';
 import { AuthGuard } from 'src/auth/auth.guard';
 
@@ -20,8 +17,8 @@ export class PlanController {
   constructor(private readonly planService: PlanService) {}
 
   @Post()
-  create(@Body() createPlanDto: CreatePlanDto) {
-    return this.planService.create(createPlanDto);
+  create() {
+    return this.planService.create();
   }
 
   @Get()
@@ -39,8 +36,8 @@ export class PlanController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePlanDto: UpdatePlanDto) {
-    return this.planService.update(+id, updatePlanDto);
+  update(@Param('id') id: string) {
+    return this.planService.update(+id);
   }
 
   @Delete(':id')

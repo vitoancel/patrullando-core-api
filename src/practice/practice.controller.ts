@@ -35,8 +35,8 @@ export class PracticeController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePlanDto: UpdatePracticeDto) {
-    return this.practiceService.update(+id, updatePlanDto);
+  update(@Param('id') id: string) {
+    return this.practiceService.update(+id);
   }
 
   @Delete(':id')

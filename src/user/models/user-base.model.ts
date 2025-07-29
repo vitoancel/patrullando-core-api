@@ -27,6 +27,16 @@ export class UserBaseModel {
   update_user: number;
 
   @Expose()
+  current_plan;
+
+  @Expose()
+  suscription_since;
+
+  @Expose()
+  suscription_until;
+
+
+  @Expose()
   role_id: number;
 
   @Exclude()

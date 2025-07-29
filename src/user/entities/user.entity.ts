@@ -7,7 +7,10 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
+import { QuestionEntity } from '../../question/entities/question.entity';
+import { RoleHistoryEntity } from '../../role-history/entities/role-history.entity';
 
 @Entity({ name: 'tb_user' })
 export class UserEntity {
@@ -51,6 +54,9 @@ export class UserEntity {
   @JoinColumn({ name: 'role_id' })
   role: RoleEntity;
 
+  @OneToMany(() => RoleHistoryEntity, (role_history) => role_history.user) // Add this line
+  role_history: RoleHistoryEntity[];
+
   get status_name(): string {
     switch (this.status) {
       case 1:
@@ -63,14 +69,46 @@ export class UserEntity {
   }
 
   get suscription_type(): string {
-    return this.role ? this.role.name : null;
+    if (!this.role) {
+      return null;
+    }
+    return this.role.name;
+  }
+
+  get suscription_since(): Date {
+    if (!this.role_history.length) {
+      return null;
+    }
+    return this.role_history.find((x) => x.status == 1).start_date;
+  }
+
+  get suscription_until(): Date {
+    if (!this.role_history.length) {
+      return null;
+    }
+
+    const role_hisotry = this.role_history.find((x) => x.status == 1)
+
+    return role_hisotry.end_date;
   }
 
   get suscription_type_id(): number {
-    return this.role ? this.role.id : null;
+    const role_history = this.role_history.find((x) => x.status == 1);
+
+    if (role_history == undefined) {
+      return null;
+    }
+
+    return role_history.plan ? role_history.plan.id : null;
   }
 
   get suscription_detail(): string {
-    return this.role ? this.role.description : null;
+    const role_history = this.role_history.find((x) => x.status == 1);
+
+    if (role_history == undefined) {
+      return null;
+    }
+
+    return role_history.plan ? role_history.plan.description : null;
   }
 }

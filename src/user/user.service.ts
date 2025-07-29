@@ -45,7 +45,7 @@ export class UserService {
       take: limit,
       order: sort ? sort : undefined,
       where: filters ? filters : undefined,
-      relations: ['role'],
+      relations: ['role', 'role_history', 'role_history.plan'],
     };
 
     const data = await this.userRepository.find(options);

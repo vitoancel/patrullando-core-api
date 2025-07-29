@@ -6,27 +6,33 @@ import {
   Patch,
   Param,
   Delete,
+  HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 import { RoleHistoryService } from './role-history.service';
 import { CreateRoleHistoryDto } from './dto/create-role-history.dto';
 import { UpdateRoleHistoryDto } from './dto/update-role-history.dto';
+import { RoleHistoryEntity } from './entities/role-history.entity';
 
 @Controller('role-history')
 export class RoleHistoryController {
   constructor(private readonly roleHistoryService: RoleHistoryService) {}
 
   @Post()
-  create(@Body() createRoleHistoryDto: CreateRoleHistoryDto) {
-    return this.roleHistoryService.create();
+  @HttpCode(HttpStatus.CREATED)
+  create(
+    @Body() createRoleHistoryDto: CreateRoleHistoryDto,
+  ): Promise<RoleHistoryEntity> {
+    return this.roleHistoryService.create(createRoleHistoryDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<RoleHistoryEntity[]> {
     return this.roleHistoryService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<RoleHistoryEntity> {
     return this.roleHistoryService.findOne(+id);
   }
 
@@ -34,12 +40,13 @@ export class RoleHistoryController {
   update(
     @Param('id') id: string,
     @Body() updateRoleHistoryDto: UpdateRoleHistoryDto,
-  ) {
-    return this.roleHistoryService.update(+id);
+  ): Promise<RoleHistoryEntity> {
+    return this.roleHistoryService.update(+id, updateRoleHistoryDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  remove(@Param('id') id: string): Promise<void> {
     return this.roleHistoryService.remove(+id);
   }
 }
