@@ -47,4 +47,7 @@ export class PlanEntity {
 
   @Column({ type: 'integer', nullable: true })
   deletion_user: number;
+
+  @Column({ type: 'integer', nullable: false, default: 1 })
+  time_limit: number;
 }
