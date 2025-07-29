@@ -8,10 +8,9 @@ import { FindManyOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class ExamMasterService {
-
   constructor(
     @InjectRepository(ExamMasterEntity)
-    private readonly examMasterRepository: Repository<ExamMasterEntity>
+    private readonly examMasterRepository: Repository<ExamMasterEntity>,
   ) {}
 
   create(createExamMasterDto: CreateExamMasterDto) {
@@ -19,16 +18,20 @@ export class ExamMasterService {
   }
 
   async findAll(listExamMaster: ListExamMasterDto) {
-
-    const { page = 1, limit = 10, sort = null, filters = null } = listExamMaster;
+    const {
+      page = 1,
+      limit = 10,
+      sort = null,
+      filters = null,
+    } = listExamMaster;
 
     // Construir opciones de búsqueda
     const options: FindManyOptions<ExamMasterEntity> = {
       skip: (page - 1) * limit,
       take: limit,
       order: sort ? sort : undefined,
-      where: filters ? filters : undefined
-  };
+      where: filters ? filters : undefined,
+    };
 
     return await this.examMasterRepository.find(options);
   }

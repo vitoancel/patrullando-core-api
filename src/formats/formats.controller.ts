@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { FormatsService } from './formats.service';
 import { CreateFormatDto } from './dto/create-format.dto';
 import { UpdateFormatDto } from './dto/update-format.dto';
@@ -17,8 +26,8 @@ export class FormatsController {
 
   @Get()
   async findAll() {
-    let response = new AllFormatsResponse()
-    
+    const response = new AllFormatsResponse();
+
     response.data = await this.formatsService.findAll();
 
     return response;

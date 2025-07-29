@@ -6,7 +6,7 @@ import { PracticeEntity } from './entities/practice.entity';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PracticeEntity]) ,AuthModule],
+  imports: [TypeOrmModule.forFeature([PracticeEntity]), AuthModule],
   controllers: [PracticeController],
   providers: [PracticeService],
 })

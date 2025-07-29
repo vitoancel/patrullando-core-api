@@ -6,7 +6,7 @@ import { FormatEntity } from './entities/format.entity';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([FormatEntity]),AuthModule ],
+  imports: [TypeOrmModule.forFeature([FormatEntity]), AuthModule],
   controllers: [FormatsController],
   providers: [FormatsService],
 })

@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
@@ -18,9 +27,8 @@ export class QuestionController {
 
   @Get()
   async findAll(@Body() listQuestionDto: ListQuestionDto) {
-   
-    let response = new AllQuestionsResponse()
-    
+    const response = new AllQuestionsResponse();
+
     response.data = await this.questionService.findAll(listQuestionDto);
     response.message = 'Questions found successfully';
     return response;
@@ -32,7 +40,10 @@ export class QuestionController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateQuestionDto: UpdateQuestionDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateQuestionDto: UpdateQuestionDto,
+  ) {
     return this.questionService.update(+id, updateQuestionDto);
   }
 

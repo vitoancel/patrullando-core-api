@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'tb_exam_master' })
 export class ExamMasterEntity {
@@ -17,7 +23,7 @@ export class ExamMasterEntity {
   @Column({ type: 'smallint', default: 1 })
   status: number;
 
-  @Column({ type: 'integer', nullable: false, default: 55   })
+  @Column({ type: 'integer', nullable: false, default: 55 })
   min_score: number;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'NOW()' })

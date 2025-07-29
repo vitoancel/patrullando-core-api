@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { ExamMasterService } from './exam-master.service';
 import { CreateExamMasterDto } from './dto/create-exam-master.dto';
 import { UpdateExamMasterDto } from './dto/update-exam-master.dto';
@@ -18,7 +27,7 @@ export class ExamMasterController {
 
   @Get()
   async findAll(@Body() listExamMaster: ListExamMasterDto) {
-    let response = new AllExamsMasterResponse()
+    const response = new AllExamsMasterResponse();
 
     response.data = await this.examMasterService.findAll(listExamMaster);
 
@@ -31,7 +40,10 @@ export class ExamMasterController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExamMasterDto: UpdateExamMasterDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateExamMasterDto: UpdateExamMasterDto,
+  ) {
     return this.examMasterService.update(+id, updateExamMasterDto);
   }
 

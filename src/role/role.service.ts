@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 export class RoleService {
   constructor(
     @InjectRepository(RoleEntity)
-    private readonly roleRepository: Repository<RoleEntity>
+    private readonly roleRepository: Repository<RoleEntity>,
   ) {}
 
   create(createRoleDto: CreateRoleDto) {
@@ -21,7 +21,7 @@ export class RoleService {
   }
 
   findOne(id: number) {
-    return this.roleRepository.findOneBy({id:id});
+    return this.roleRepository.findOneBy({ id: id });
   }
 
   update(id: number, updateRoleDto: UpdateRoleDto) {

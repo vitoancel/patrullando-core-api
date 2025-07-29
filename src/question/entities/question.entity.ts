@@ -1,4 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Index, Timestamp,OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  Index,
+  Timestamp,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { ExamMasterEntity } from '../../exam-master/entities/exam-master.entity'; // Assuming you have this entity
 import { QuestionMasterEntity } from '../../question-master/entities/question-master.entity'; // Assuming you have this entity
 import { ExamEntity } from '../../exam/entities/exam.entity'; // Assuming you have this entity

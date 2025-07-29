@@ -1,5 +1,13 @@
 import { RoleEntity } from 'src/role/entities/role.entity';
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity({ name: 'tb_user' })
 export class UserEntity {
@@ -39,9 +47,30 @@ export class UserEntity {
   @Column({ nullable: false })
   role_id: number;
 
-
   @ManyToOne(() => RoleEntity)
-    @JoinColumn({ name: 'role_id' })
-    role: RoleEntity;
-  
+  @JoinColumn({ name: 'role_id' })
+  role: RoleEntity;
+
+  get status_name(): string {
+    switch (this.status) {
+      case 1:
+        return 'ACTIVO';
+      case 0:
+        return 'INACTIVO';
+      default:
+        return 'DESCONOCIDO';
+    }
+  }
+
+  get suscription_type(): string {
+    return this.role ? this.role.name : null;
+  }
+
+  get suscription_type_id(): number {
+    return this.role ? this.role.id : null;
+  }
+
+  get suscription_detail(): string {
+    return this.role ? this.role.description : null;
+  }
 }

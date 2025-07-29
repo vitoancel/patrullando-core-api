@@ -8,10 +8,9 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class PlanService {
-
   constructor(
     @InjectRepository(PlanEntity)
-    private readonly planRepository: Repository<PlanEntity>
+    private readonly planRepository: Repository<PlanEntity>,
   ) {}
 
   create(createPlanDto: CreatePlanDto) {
@@ -21,8 +20,8 @@ export class PlanService {
   async findAll() {
     return await this.planRepository.find({
       order: {
-        id: "ASC"
-      }
+        id: 'ASC',
+      },
     });
   }
 

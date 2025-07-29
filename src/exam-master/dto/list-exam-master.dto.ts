@@ -1,4 +1,4 @@
-import { BaseListRequest } from "src/utils/request";
-import { ExamMasterInterface } from "../interfaces/exam-master.interface";
+import { BaseListRequest } from 'src/utils/request';
+import { ExamMasterInterface } from '../interfaces/exam-master.interface';
 
-export class ListExamMasterDto extends BaseListRequest<ExamMasterInterface>{}
+export class ListExamMasterDto extends BaseListRequest<ExamMasterInterface> {}

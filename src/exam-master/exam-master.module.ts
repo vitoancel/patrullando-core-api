@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ExamMasterEntity]) ,AuthModule],
+  imports: [TypeOrmModule.forFeature([ExamMasterEntity]), AuthModule],
   controllers: [ExamMasterController],
   providers: [ExamMasterService],
 })

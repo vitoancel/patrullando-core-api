@@ -18,16 +18,17 @@ import { PracticeModule } from './practice/practice.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path'; //
 import { FormatsModule } from './formats/formats.module';
+import { RoleHistoryModule } from './role-history/role-history.module';
 
 @Module({
   imports: [
-    AuthModule, 
+    AuthModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'), // Ruta absoluta a la carpeta de archivos estáticos
       // Por defecto, los archivos se servirán desde la raíz del servidor (ej. http://localhost:3000/index.html)
       // Si quieres un prefijo, puedes usar 'serveRoot'
       // serveRoot: '/static/', // Los archivos se servirán desde http://localhost:3000/static/index.html
-    }),    
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'db.patrullando.pe',
@@ -38,7 +39,7 @@ import { FormatsModule } from './formats/formats.module';
       entities: [
         //__dirname + '/../**/*.entity.ts',
         //UserEntity,RoleEntity,PermissionEntity,
-        'dist/**/*.entity.js'
+        'dist/**/*.entity.js',
       ],
       synchronize: true,
     }),
@@ -53,7 +54,8 @@ import { FormatsModule } from './formats/formats.module';
     QuestionMasterModule,
     CategoryModule,
     PracticeModule,
-    FormatsModule
+    FormatsModule,
+    RoleHistoryModule,
   ],
   controllers: [AppController, UserController],
   providers: [AppService],

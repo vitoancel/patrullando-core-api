@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 
 @Entity({ name: 'tb_role' })
 export class RoleEntity {
@@ -31,5 +38,4 @@ export class RoleEntity {
 
   @Column({ nullable: true })
   deletion_user: number;
-
 }

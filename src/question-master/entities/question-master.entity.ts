@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Index, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  Index,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { CategoryEntity } from '../../category/entities/category.entity'; // Assuming you have this entity
 
 @Entity('tb_question_master')
@@ -17,7 +26,7 @@ export class QuestionMasterEntity {
   @Column({ type: 'smallint', default: 1 })
   question_type: number;
 
-  @Column({ type: 'integer', default: 1  })
+  @Column({ type: 'integer', default: 1 })
   score: number;
 
   @Column({ type: 'smallint', default: 1 })

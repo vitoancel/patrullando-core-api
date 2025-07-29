@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Index } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  Index,
+} from 'typeorm';
 import { QuestionEntity } from '../../question/entities/question.entity'; // Assuming you have this entity
 
 @Entity('tb_option')
@@ -11,7 +18,7 @@ export class OptionEntity {
   @JoinColumn({ name: 'question_id' })
   question: QuestionEntity;
 
-  @Column({ type: 'text' , nullable: true})
+  @Column({ type: 'text', nullable: true })
   option_text: string;
 
   @Column({ type: 'smallint', nullable: true })
@@ -26,4 +33,3 @@ export class OptionEntity {
   @Column({ type: 'integer', nullable: true })
   order_num: number;
 }
-

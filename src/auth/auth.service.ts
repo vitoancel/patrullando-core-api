@@ -8,38 +8,36 @@ import { LoginResponse } from './responses/login.response';
 export class AuthService {
   constructor(
     private userService: UserService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
-  async LogIn(
-    username: string,
-    pass: string,
-  ): Promise<LoginResponse> {
-
-    let response = new LoginResponse()
+  async LogIn(username: string, pass: string): Promise<LoginResponse> {
+    const response = new LoginResponse();
 
     const user = await this.userService.findOneWithRole(username);
-    
-    if (user?.password !== encryptText(pass)) {
 
+    if (user?.password !== encryptText(pass)) {
       response.status = false;
-      response.message = "Usuario o Contraseña incorrecta."
+      response.message = 'Usuario o Contraseña incorrecta.';
 
       return response;
     }
 
-    
-   
-    const payload = { user_id: user.id, user_name: user.username, phone_number: user.phone_number, role_id : user.role.id , role_name : user.role.name};
+    const payload = {
+      user_id: user.id,
+      user_name: user.username,
+      phone_number: user.phone_number,
+      role_id: user.role.id,
+      role_name: user.role.name,
+    };
 
-    response.message = "¡Login Exitoso!"
-    response.data = await this.jwtService.signAsync(payload)
+    response.message = '¡Login Exitoso!';
+    response.data = await this.jwtService.signAsync(payload);
 
     return response;
-
   }
 
-  async getUserRole(username){
-    return await this.userService.findOneWithRole(username)
+  async getUserRole(username) {
+    return await this.userService.findOneWithRole(username);
   }
 }

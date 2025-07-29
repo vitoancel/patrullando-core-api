@@ -1,3 +1,3 @@
 export enum ROLES {
-    FREE = 1
+  FREE = 1,
 }

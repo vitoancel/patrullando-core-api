@@ -1,3 +1,3 @@
 export class CreateExamDto {
-    exam_master_id: number
+  exam_master_id: number;
 }

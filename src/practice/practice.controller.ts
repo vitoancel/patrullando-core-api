@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { PracticeService } from './practice.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { CreatePracticeDto } from './dto/create-practice.dto';
@@ -10,7 +20,7 @@ export class PracticeController {
   constructor(private readonly practiceService: PracticeService) {}
 
   @Post()
-  async create(@Body() createPracticeDto: CreatePracticeDto,@Request() req) {
+  async create(@Body() createPracticeDto: CreatePracticeDto, @Request() req) {
     return await this.practiceService.create(createPracticeDto, req.user);
   }
 

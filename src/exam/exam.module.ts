@@ -11,7 +11,8 @@ import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
-    OptionModule,AuthModule,
+    OptionModule,
+    AuthModule,
     TypeOrmModule.forFeature([ExamEntity]), // Register your entities
   ],
   controllers: [ExamController],

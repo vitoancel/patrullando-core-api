@@ -8,9 +8,9 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class FormatsService {
   constructor(
-      @InjectRepository(FormatEntity)
-      private readonly formatRepository: Repository<FormatEntity>
-    ) {}
+    @InjectRepository(FormatEntity)
+    private readonly formatRepository: Repository<FormatEntity>,
+  ) {}
 
   create(createFormatDto: CreateFormatDto) {
     return 'This action adds a new format';
@@ -19,8 +19,8 @@ export class FormatsService {
   async findAll() {
     return await this.formatRepository.find({
       order: {
-        id: "ASC"
-      }
+        id: 'ASC',
+      },
     });
   }
 

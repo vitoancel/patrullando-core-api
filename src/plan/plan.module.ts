@@ -6,7 +6,7 @@ import { PlanEntity } from './entities/plan.entity';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PlanEntity]) ,AuthModule],
+  imports: [TypeOrmModule.forFeature([PlanEntity]), AuthModule],
   controllers: [PlanController],
   providers: [PlanService],
 })

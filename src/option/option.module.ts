@@ -5,7 +5,7 @@ import { OptionController } from './option.controller';
 import { OptionEntity } from './entities/option.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([OptionEntity]) ],
+  imports: [TypeOrmModule.forFeature([OptionEntity])],
   controllers: [OptionController],
   exports: [OptionService],
   providers: [OptionService],

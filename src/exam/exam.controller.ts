@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request} from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { ExamService } from './exam.service';
 import { CreateExamDto } from './dto/create-exam.dto';
 import { UpdateExamDto } from './dto/update-exam.dto';
@@ -18,8 +28,8 @@ export class ExamController {
 
   @Get()
   async findAll(@Body() listExamDto: ListExamDto) {
-    let response = new AllExamsResponse()
-    
+    const response = new AllExamsResponse();
+
     response.data = await this.examService.findAll(listExamDto);
     response.message = 'Exams found successfully';
     return response;
@@ -27,9 +37,12 @@ export class ExamController {
 
   @Get('by-user')
   async findAllByUser(@Body() listExamDto: ListExamDto, @Request() req) {
-    let response = new AllExamsResponse()
+    const response = new AllExamsResponse();
 
-    response.data = await this.examService.findAllByUser(listExamDto,req.user.user_id);
+    response.data = await this.examService.findAllByUser(
+      listExamDto,
+      req.user.user_id,
+    );
 
     response.message = 'Exams found successfully';
     return response;
@@ -41,7 +54,11 @@ export class ExamController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateExamDto: UpdateExamDto, @Request() req) {
+  update(
+    @Param('id') id: number,
+    @Body() updateExamDto: UpdateExamDto,
+    @Request() req,
+  ) {
     return this.examService.update(id, updateExamDto, req.user);
   }
 
