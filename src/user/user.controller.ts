@@ -26,14 +26,15 @@ export class UserController {
     return response;
   }
 
-  @Get()
+  @Post('List')
   async findAllWithSuscription(
     @Body() listUsersWithSuscription: ListUsersWithSuscriptionRequest,
   ): Promise<ListUsersWithSuscriptionResponse> {
     const response = new ListUsersWithSuscriptionResponse();
-    response.data = await this.userService.findAllWithSuscription(
-      listUsersWithSuscription,
-    );
+    const { total_records, dataMapped } =
+      await this.userService.findAllWithSuscription(listUsersWithSuscription);
+    response.total_records = total_records;
+    response.data = dataMapped;
     return response;
   }
 }

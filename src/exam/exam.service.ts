@@ -35,7 +35,7 @@ export class ExamService {
       response.status = true;
       response.message = 'Exam created successfully';
       response.data = await this.findExamWithQuestionsAndOptions(
-        creation_result[0].created_exam_id,
+        creation_result[0].v_exam_id,
       );
 
       return response;

@@ -36,6 +36,9 @@ export class UserBaseModel {
   suscription_until;
 
   @Expose()
+  suscription_time_limit;
+
+  @Expose()
   role_id: number;
 
   @Exclude()

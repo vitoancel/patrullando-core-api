@@ -110,4 +110,14 @@ export class UserEntity {
 
     return role_history.plan ? role_history.plan.description : null;
   }
+
+  get suscription_time_limit(): number {
+    const role_history = this.role_history.find((x) => x.status == 1);
+
+    if (role_history == undefined) {
+      return null;
+    }
+
+    return role_history.plan ? role_history.plan.time_limit : null;
+  }
 }

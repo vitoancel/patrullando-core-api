@@ -3,4 +3,5 @@ export class BaseResponse<T> {
   status: boolean = true;
   code: number = 200;
   data?: T; // Propiedad genérica para los datos
+  total_records: number = 0;
 }

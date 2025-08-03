@@ -3,6 +3,7 @@ import { ListExamMasterDto } from './dto/list-exam-master.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExamMasterEntity } from './entities/exam-master.entity';
 import { FindManyOptions, Repository } from 'typeorm';
+import { ListExamMasterRequest } from './request/list-exam-master.request';
 
 @Injectable()
 export class ExamMasterService {
@@ -15,7 +16,9 @@ export class ExamMasterService {
     return 'This action adds a new examMaster';
   }
 
-  async findAll(listExamMaster: ListExamMasterDto) {
+  async findAll(
+    listExamMaster: ListExamMasterRequest,
+  ): Promise<ListExamMasterDto> {
     console.log({ listExamMaster });
 
     const {
@@ -33,9 +36,10 @@ export class ExamMasterService {
       where: filters ? filters : undefined,
     };
 
-    console.log({ options });
+    const dataMapped = await this.examMasterRepository.find(options);
+    const total_records = await this.examMasterRepository.count(options);
 
-    return await this.examMasterRepository.find(options);
+    return { total_records, dataMapped };
   }
 
   findOne(id: number) {

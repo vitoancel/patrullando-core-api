@@ -8,6 +8,7 @@ import { ROLES } from 'src/utils/enums/roles';
 import { ListUsersWithSuscriptionRequest } from './requests/list-users-with-suscription.request';
 import { UserWithSuscriptionModel } from './models/user-with-suscription.mode';
 import { plainToInstance } from 'class-transformer';
+import { ListUsersWithSuscriptionPaginationDto } from './dto/list-user.dto';
 
 @Injectable()
 export class UserService {
@@ -30,7 +31,7 @@ export class UserService {
 
   async findAllWithSuscription(
     listUsersWithSuscription: ListUsersWithSuscriptionRequest,
-  ): Promise<UserWithSuscriptionModel[]> {
+  ): Promise<ListUsersWithSuscriptionPaginationDto> {
     const {
       page = 1,
       limit = 10,
@@ -48,8 +49,11 @@ export class UserService {
     };
 
     const data = await this.userRepository.find(options);
+    const total_records: number = await this.userRepository.count(options);
 
-    return plainToInstance(UserWithSuscriptionModel, data);
+    const dataMapped = plainToInstance(UserWithSuscriptionModel, data);
+
+    return { total_records, dataMapped };
   }
 
   async create(createUserDto: CreateUserRequest): Promise<boolean> {

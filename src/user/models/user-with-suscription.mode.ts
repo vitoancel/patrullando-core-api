@@ -21,12 +21,13 @@ export class UserWithSuscriptionModel extends UserBaseModel {
   suscription_type_id;
 
   @Expose()
-  suscription_detail;
+  suscription_time_limit;
 
-  // Exclude Keys
-  @Exclude()
+  @Expose()
   phone_number;
 
+
+  // Exclude Keys
   @Exclude()
   role;
 
@@ -47,4 +48,7 @@ export class UserWithSuscriptionModel extends UserBaseModel {
 
   @Exclude()
   role_history;
+
+  @Exclude()
+  suscription_detail;
 }
