@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePracticeDto } from './dto/create-practice.dto';
 import { PracticeEntity } from './entities/practice.entity';
-import { InjectRepository, InjectConnection } from '@nestjs/typeorm';
-import { Repository, Connection } from 'typeorm';
+import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
+import { Connection, Repository } from 'typeorm';
 import { CreatePracticeResponse } from './responses/new_practice.response';
 
 @Injectable()

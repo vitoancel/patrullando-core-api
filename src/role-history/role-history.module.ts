@@ -7,6 +7,7 @@ import { RoleHistoryEntity } from './entities/role-history.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([RoleHistoryEntity])],
   controllers: [RoleHistoryController],
+  exports: [RoleHistoryService],
   providers: [RoleHistoryService],
 })
 export class RoleHistoryModule {}

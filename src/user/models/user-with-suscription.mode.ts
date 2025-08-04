@@ -26,7 +26,6 @@ export class UserWithSuscriptionModel extends UserBaseModel {
   @Expose()
   phone_number;
 
-
   // Exclude Keys
   @Exclude()
   role;

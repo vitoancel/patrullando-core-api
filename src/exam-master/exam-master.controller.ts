@@ -1,15 +1,14 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common';
 import { ExamMasterService } from './exam-master.service';
-import { ListExamMasterDto } from './dto/list-exam-master.dto';
 import { AllExamsMasterResponse } from './responses/all-exams-master.response';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ListExamMasterRequest } from './request/list-exam-master.request';

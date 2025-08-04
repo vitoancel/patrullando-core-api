@@ -1,13 +1,13 @@
 import { RoleEntity } from 'src/role/entities/role.entity';
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
+  Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { RoleHistoryEntity } from '../../role-history/entities/role-history.entity';
 

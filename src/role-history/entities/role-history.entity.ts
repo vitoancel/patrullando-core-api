@@ -2,11 +2,11 @@ import { UserEntity } from 'src/user/entities/user.entity';
 import { RoleEntity } from 'src/role/entities/role.entity';
 import { PlanEntity } from 'src/plan/entities/plan.entity';
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
+  Entity,
   JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity({ name: 'tb_role_history' })

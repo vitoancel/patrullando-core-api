@@ -6,8 +6,8 @@ import {
   HttpStatus,
   Post,
   Request,
-  UseGuards,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { LoginResponse } from './responses/login.response';
 import { AuthGuard } from './auth.guard';

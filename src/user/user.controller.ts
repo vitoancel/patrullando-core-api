@@ -1,9 +1,10 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserRequest } from './requests/create-user.request';
 import { CreateUserResponse } from './responses/create-user.response';
 import { ListUsersWithSuscriptionResponse } from './responses/list-users-with-suscription.response';
 import { ListUsersWithSuscriptionRequest } from './requests/list-users-with-suscription.request';
+import { UpdateUserRequest } from './requests/update-user.request';
 
 @Controller('user')
 export class UserController {
@@ -36,5 +37,13 @@ export class UserController {
     response.total_records = total_records;
     response.data = dataMapped;
     return response;
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateUserRequest: UpdateUserRequest,
+  ) {
+    return this.userService.update(+id, updateUserRequest);
   }
 }
