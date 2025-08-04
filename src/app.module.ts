@@ -19,9 +19,13 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path'; //
 import { FormatsModule } from './formats/formats.module';
 import { RoleHistoryModule } from './role-history/role-history.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     AuthModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'), // Ruta absoluta a la carpeta de archivos estáticos
@@ -29,19 +33,19 @@ import { RoleHistoryModule } from './role-history/role-history.module';
       // Si quieres un prefijo, puedes usar 'serveRoot'
       // serveRoot: '/static/', // Los archivos se servirán desde http://localhost:3000/static/index.html
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'db.patrullando.pe',
-      //port: 5432,
-      username: 'admin_db',
-      password: 'P@t4ull@nd0_s3rv3r',
-      database: 'patrullando_db',
-      entities: [
-        //__dirname + '/../**/*.entity.ts',
-        //UserEntity,RoleEntity,PermissionEntity,
-        'dist/**/*.entity.js',
-      ],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: configService.get('DB_TYPE') as 'postgres',
+        host: configService.get('DB_HOST'),
+        port: parseInt(configService.get('DB_PORT')),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_DATABASE') as string,
+        entities: ['dist/**/*.entity.js'],
+        synchronize: configService.get('DB_SYNCHRONIZE') === 'true',
+      }),
     }),
     UserModule,
     PermissionModule,

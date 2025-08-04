@@ -13,14 +13,41 @@ import { LoginResponse } from './responses/login.response';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
+import { AuthLoginRequest } from './requests/auth-login.request';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 
+@ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @ApiOperation({
+    summary: 'User login',
+    description: 'Authenticate a user with username and password',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'User successfully authenticated',
+    type: LoginResponse,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request - Missing username or password',
+    type: LoginResponse,
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal server error',
+    type: LoginResponse,
+  })
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  async signIn(@Body() signInDto: Record<string, any>, @Res() res: Response) {
+  async signIn(@Body() signInDto: AuthLoginRequest, @Res() res: Response) {
     let response = new LoginResponse();
 
     if (!signInDto.username || !signInDto.password) {
@@ -42,6 +69,19 @@ export class AuthController {
     return res.status(HttpStatus.OK).json(response);
   }
 
+  @ApiOperation({
+    summary: 'Get user profile',
+    description: 'Retrieve the profile of the authenticated user',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'User profile retrieved successfully',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized - Invalid or missing token',
+  })
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
