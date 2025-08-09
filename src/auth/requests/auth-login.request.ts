@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class AuthLoginRequest {
   @ApiProperty({
     description: 'Username for authentication',
-    example: 'john.doe',
+    example: '01960d02-5008-726d-a879-f15715d9444d',
     required: true,
   })
   @IsNotEmpty({ message: 'El nombre de usuario es requerido' })
@@ -13,7 +13,7 @@ export class AuthLoginRequest {
 
   @ApiProperty({
     description: 'Password for authentication',
-    example: 'password123',
+    example: '01960d02-5008-726d-a879-f15715d9444d',
     required: true,
   })
   @IsNotEmpty({ message: 'La contraseña es requerida' })

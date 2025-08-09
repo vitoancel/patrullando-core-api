@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Patch,
@@ -56,10 +55,5 @@ export class ExamController {
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateExamDto: UpdateExamDto) {
     return this.examService.update(id, updateExamDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.examService.remove(+id);
   }
 }

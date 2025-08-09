@@ -15,10 +15,10 @@ import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { AuthLoginRequest } from './requests/auth-login.request';
 import {
-  ApiTags,
+  ApiBearerAuth,
   ApiOperation,
   ApiResponse,
-  ApiBearerAuth,
+  ApiTags,
 } from '@nestjs/swagger';
 
 @ApiTags('Authentication')
@@ -27,7 +27,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @ApiOperation({
-    summary: 'User login',
+    summary: 'LOGIN',
     description: 'Authenticate a user with username and password',
   })
   @ApiResponse({
@@ -70,7 +70,7 @@ export class AuthController {
   }
 
   @ApiOperation({
-    summary: 'Get user profile',
+    summary: 'PROFILE',
     description: 'Retrieve the profile of the authenticated user',
   })
   @ApiResponse({

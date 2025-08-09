@@ -46,16 +46,4 @@ export class PlanService {
       },
     });
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} plan`;
-  }
-
-  update(id: number) {
-    return `This action updates a #${id} plan`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} plan`;
-  }
 }

@@ -1,32 +1,32 @@
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CategoryService } from './category.service';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ListCategoriesRequest } from './requests/list-categories.request';
+import { ListCategoriesResponse } from './responses/list-categories.response';
 
+@ApiTags('Categories')
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Post()
-  create() {
-    return this.categoryService.create();
-  }
-
-  @Get()
-  findAll() {
-    return this.categoryService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string) {
-    return this.categoryService.update(+id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.categoryService.remove(+id);
+  @ApiOperation({
+    summary: 'LIST',
+    description: 'Retrieve a list of categories',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'List of categories retrieved successfully',
+    type: ListCategoriesResponse,
+  })
+  @Post('List')
+  async findAll(
+    @Body() listCategoriesRequest: ListCategoriesRequest,
+  ): Promise<ListCategoriesResponse> {
+    const response = new ListCategoriesResponse();
+    const { total_records, dataMapped } =
+      await this.categoryService.findAllPaginated(listCategoriesRequest);
+    response.total_records = total_records;
+    response.data = dataMapped;
+    return response;
   }
 }

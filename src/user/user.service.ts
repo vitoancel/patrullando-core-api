@@ -12,6 +12,7 @@ import { ListUsersWithSuscriptionPaginationDto } from './dto/list-user.dto';
 import { UpdateUserRequest } from './requests/update-user.request';
 import { RoleHistoryService } from '../role-history/role-history.service';
 import { CreateRoleHistoryDto } from '../role-history/dto/create-role-history.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -94,7 +95,7 @@ export class UserService {
   async update(
     id: number,
     updateUserRequest: UpdateUserRequest,
-  ): Promise<{ success: boolean; message: string }> {
+  ): Promise<UpdateUserDto> {
     try {
       console.log({ id, updateUserRequest });
       // Find the user by ID
@@ -104,7 +105,7 @@ export class UserService {
       if (!user) {
         return {
           success: false,
-          message: `Usuario con ID ${id} no encontrado`,
+          data: `Usuario con ID ${id} no encontrado`,
         };
       }
 
@@ -118,7 +119,7 @@ export class UserService {
         if (existingUser && existingUser.id !== id) {
           return {
             success: false,
-            message: 'El nombre de usuario ya está en uso',
+            data: 'El nombre de usuario ya está en uso',
           };
         }
 
@@ -139,7 +140,7 @@ export class UserService {
         if (existingUser && existingUser.id !== id) {
           return {
             success: false,
-            message: 'El número de teléfono ya está en uso',
+            data: 'El número de teléfono ya está en uso',
           };
         }
 
@@ -179,13 +180,13 @@ export class UserService {
 
       return {
         success: true,
-        message: `Usuario con ID ${id} actualizado correctamente`,
+        data: `Usuario con ID ${id} actualizado correctamente`,
       };
     } catch (error) {
       console.log({ error: error.message });
       return {
         success: false,
-        message: `Error al actualizar el usuario: ${error.message}`,
+        data: `Error al actualizar el usuario: ${error.message}`,
       };
     }
   }

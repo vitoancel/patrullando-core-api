@@ -122,10 +122,6 @@ export class ExamService {
     return response;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} exam`;
-  }
-
   //////////////////////////////////////////
   async findExamWithQuestionsAndOptions(examId: number): Promise<ExamEntity> {
     try {

@@ -1,10 +1,7 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
-  Param,
-  Patch,
   Post,
   Request,
   UseGuards,
@@ -43,20 +40,5 @@ export class PlanController {
     response.data = await this.planService.findAll();
 
     return response;
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.planService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string) {
-    return this.planService.update(+id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.planService.remove(+id);
   }
 }

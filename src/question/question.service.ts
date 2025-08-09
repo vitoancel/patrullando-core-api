@@ -11,10 +11,6 @@ export class QuestionService {
     private readonly questionRepository: Repository<QuestionEntity>,
   ) {}
 
-  create() {
-    return 'This action adds a new question';
-  }
-
   async findAll(listQuestionDto: ListQuestionDto) {
     const {
       page = 1,
@@ -35,17 +31,5 @@ export class QuestionService {
       ...options,
       relations: ['options', 'category'],
     });
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} question`;
-  }
-
-  update(id: number) {
-    return `This action updates a #${id} question`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} question`;
   }
 }

@@ -11,28 +11,8 @@ export class OptionService {
     private readonly optionRepository: Repository<OptionEntity>,
   ) {}
 
-  create() {
-    return 'This action adds a new option';
-  }
-
-  findAll() {
-    return `This action returns all option`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} option`;
-  }
-
   findByIds(optionIds: number[]) {
     return this.optionRepository.findByIds(optionIds);
-  }
-
-  update(id: number) {
-    return `This action updates a #${id} option`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} option`;
   }
 
   async updateMasive(options: any) {
