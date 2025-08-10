@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ExamMasterEntity } from './entities/exam-master.entity';
 import { FindManyOptions, Repository } from 'typeorm';
 import { ListExamMasterRequest } from './request/list-exam-master.request';
+import { CreateExamMasterRequest } from './request/create-exam-master.request';
 
 @Injectable()
 export class ExamMasterService {
@@ -12,8 +13,27 @@ export class ExamMasterService {
     private readonly examMasterRepository: Repository<ExamMasterEntity>,
   ) {}
 
-  create() {
-    return 'This action adds a new examMaster';
+  async create(request: CreateExamMasterRequest) {
+    const repository: Repository<ExamMasterEntity> = this.examMasterRepository;
+    const newObj: ExamMasterEntity = new ExamMasterEntity();
+
+    try {
+      newObj.name = request.name;
+      newObj.description = request.description;
+      newObj.duration = request.duration;
+      newObj.min_score = request.min_score;
+
+      newObj.creation_date = new Date();
+
+      const newEntity = repository.create(newObj);
+      await repository.save(newEntity);
+
+      return true;
+    } catch (e) {
+      console.log({ error: e.message });
+
+      return false;
+    }
   }
 
   async findAll(

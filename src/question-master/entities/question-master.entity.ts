@@ -5,10 +5,12 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { CategoryEntity } from '../../category/entities/category.entity'; // Assuming you have this entity
+import { OptionMasterEntity } from '../../option-master/entities/option-master.entity';
 
 @Entity('tb_question_master')
 export class QuestionMasterEntity {
@@ -43,4 +45,7 @@ export class QuestionMasterEntity {
 
   @Column({ type: 'varchar', default: '0', length: 255, nullable: false })
   ref_code: string;
+
+  @OneToMany(() => OptionMasterEntity, (option) => option.questionMaster)
+  options: OptionMasterEntity[];
 }

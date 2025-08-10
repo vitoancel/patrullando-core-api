@@ -20,6 +20,7 @@ import { join } from 'path'; //
 import { FormatsModule } from './formats/formats.module';
 import { RoleHistoryModule } from './role-history/role-history.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { OptionMasterModule } from './option-master/option-master.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     PracticeModule,
     FormatsModule,
     RoleHistoryModule,
+    OptionMasterModule,
   ],
   controllers: [AppController, UserController],
   providers: [AppService],

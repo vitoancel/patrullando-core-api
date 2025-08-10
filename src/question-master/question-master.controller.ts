@@ -1,6 +1,22 @@
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { QuestionMasterService } from './question-master.service';
+import { ListQuestionMasterRequest } from './request/list-question-master.request';
+import { AllQuestionMastersResponse } from './responses/all-question-masters.response';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { ListUsersWithSuscriptionResponse } from '../user/responses/list-users-with-suscription.response';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('question-master')
 export class QuestionMasterController {
   constructor(private readonly questionMasterService: QuestionMasterService) {}
@@ -10,9 +26,14 @@ export class QuestionMasterController {
     return this.questionMasterService.create();
   }
 
-  @Get()
-  findAll() {
-    return this.questionMasterService.findAll();
+  @Post('list')
+  async findAll(@Body() listDto: ListQuestionMasterRequest) {
+    const response = new AllQuestionMastersResponse();
+    const { total_records, dataMapped } =
+      await this.questionMasterService.findAll(listDto);
+    response.total_records = total_records;
+    response.data = dataMapped;
+    return response;
   }
 
   @Get(':id')

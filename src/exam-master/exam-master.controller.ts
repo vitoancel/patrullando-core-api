@@ -12,15 +12,34 @@ import { ExamMasterService } from './exam-master.service';
 import { AllExamsMasterResponse } from './responses/all-exams-master.response';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ListExamMasterRequest } from './request/list-exam-master.request';
+import { CreateExamMasterRequest } from './request/create-exam-master.request';
+import { PlanEntity } from '../plan/entities/plan.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { ExamMasterEntity } from './entities/exam-master.entity';
+import { CreateExamMasterResponse } from './responses/create-exam-master.response';
 
 @UseGuards(AuthGuard)
 @Controller('exam-master')
 export class ExamMasterController {
-  constructor(private readonly examMasterService: ExamMasterService) {}
+  constructor(
+    private readonly examMasterService: ExamMasterService,
+  ) {}
 
   @Post()
-  create() {
-    return this.examMasterService.create();
+  async create(@Body() request: CreateExamMasterRequest) {
+    const response: CreateExamMasterResponse = new CreateExamMasterResponse();
+    const hasBeenCreated = await this.examMasterService.create(request);
+
+    if (!hasBeenCreated) {
+      response.status = false;
+      response.message = 'Ocurrió un error al crear el Examen Maestro';
+      return response;
+    }
+
+    response.message = 'Examen Maestro creado con éxito';
+
+    return response;
   }
 
   @Get()

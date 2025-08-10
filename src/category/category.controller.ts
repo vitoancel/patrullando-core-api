@@ -25,10 +25,18 @@ export class CategoryController {
     summary: 'CREATE',
     description: 'Create a new category',
   })
-  @ApiResponse({ status: 201, description: 'Category created', type: CategoryEntity })
+  @ApiResponse({
+    status: 201,
+    description: 'Category created',
+    type: CategoryEntity,
+  })
   @Post()
-  async create(@Body() createCategoryDto: CreateCategoryDto): Promise<CategoryEntity> {
-    return this.categoryService.create(createCategoryDto as Partial<CategoryEntity>);
+  async create(
+    @Body() createCategoryDto: CreateCategoryDto,
+  ): Promise<CategoryEntity> {
+    return this.categoryService.create(
+      createCategoryDto as Partial<CategoryEntity>,
+    );
   }
 
   @ApiOperation({
@@ -53,27 +61,47 @@ export class CategoryController {
   }
 
   @ApiOperation({ summary: 'GET ALL', description: 'Retrieve all categories' })
-  @ApiResponse({ status: 200, description: 'All categories retrieved', type: [CategoryEntity] })
+  @ApiResponse({
+    status: 200,
+    description: 'All categories retrieved',
+    type: [CategoryEntity],
+  })
   @Get()
   async findAll(): Promise<CategoryEntity[]> {
     return this.categoryService.findAll();
   }
 
-  @ApiOperation({ summary: 'GET ONE', description: 'Retrieve a category by id' })
-  @ApiResponse({ status: 200, description: 'Category retrieved', type: CategoryEntity })
+  @ApiOperation({
+    summary: 'GET ONE',
+    description: 'Retrieve a category by id',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Category retrieved',
+    type: CategoryEntity,
+  })
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<CategoryEntity> {
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<CategoryEntity> {
     return this.categoryService.findOne(id);
   }
 
   @ApiOperation({ summary: 'UPDATE', description: 'Update a category by id' })
-  @ApiResponse({ status: 200, description: 'Category updated', type: CategoryEntity })
+  @ApiResponse({
+    status: 200,
+    description: 'Category updated',
+    type: CategoryEntity,
+  })
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ): Promise<CategoryEntity> {
-    return this.categoryService.update(id, updateCategoryDto as Partial<CategoryEntity>);
+    return this.categoryService.update(
+      id,
+      updateCategoryDto as Partial<CategoryEntity>,
+    );
   }
 
   @ApiOperation({
