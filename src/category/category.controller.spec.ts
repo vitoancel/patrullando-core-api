@@ -8,7 +8,17 @@ describe('CategoryController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CategoryController],
-      providers: [CategoryService],
+      providers: [
+        {
+          provide: CategoryService,
+          useValue: {
+            findAllByExamIdPaginated: async () => ({
+              total_records: 0,
+              dataMapped: [],
+            }),
+          },
+        },
+      ],
     }).compile();
 
     controller = module.get<CategoryController>(CategoryController);

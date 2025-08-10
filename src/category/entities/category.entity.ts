@@ -4,7 +4,9 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { ExamMasterCategoryEntity } from './exam-master-category.entity';
 
 @Entity('tb_category')
 export class CategoryEntity {
@@ -25,4 +27,10 @@ export class CategoryEntity {
 
   @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   update_date: Date;
+
+  @OneToMany(
+    () => ExamMasterCategoryEntity,
+    (examMasterCategory) => examMasterCategory.category,
+  )
+  examMasterCategories: ExamMasterCategoryEntity[];
 }

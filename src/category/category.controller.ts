@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, Post } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ListCategoriesRequest } from './requests/list-categories.request';
@@ -18,13 +18,17 @@ export class CategoryController {
     description: 'List of categories retrieved successfully',
     type: ListCategoriesResponse,
   })
-  @Post('List')
-  async findAll(
+  @Post('ListByExamMasterId/:exam_master_id')
+  async findAllByExamMasterId(
     @Body() listCategoriesRequest: ListCategoriesRequest,
+    @Param('exam_master_id') exam_master_id: number,
   ): Promise<ListCategoriesResponse> {
     const response = new ListCategoriesResponse();
     const { total_records, dataMapped } =
-      await this.categoryService.findAllPaginated(listCategoriesRequest);
+      await this.categoryService.findAllByExamIdPaginated(
+        listCategoriesRequest,
+        exam_master_id,
+      );
     response.total_records = total_records;
     response.data = dataMapped;
     return response;
