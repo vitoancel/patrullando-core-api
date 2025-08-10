@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { OptionMasterService } from './option-master.service';
 import { CreateOptionMasterDto } from './dto/create-option-master.dto';
 import { UpdateOptionMasterDto } from './dto/update-option-master.dto';
@@ -23,7 +31,10 @@ export class OptionMasterController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOptionMasterDto: UpdateOptionMasterDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateOptionMasterDto: UpdateOptionMasterDto,
+  ) {
     return this.optionMasterService.update(+id, updateOptionMasterDto);
   }
 

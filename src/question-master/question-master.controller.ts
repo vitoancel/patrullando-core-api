@@ -13,7 +13,6 @@ import { ListQuestionMasterRequest } from './request/list-question-master.reques
 import { AllQuestionMastersResponse } from './responses/all-question-masters.response';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { ListUsersWithSuscriptionResponse } from '../user/responses/list-users-with-suscription.response';
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard)

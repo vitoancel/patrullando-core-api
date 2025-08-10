@@ -13,18 +13,12 @@ import { AllExamsMasterResponse } from './responses/all-exams-master.response';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ListExamMasterRequest } from './request/list-exam-master.request';
 import { CreateExamMasterRequest } from './request/create-exam-master.request';
-import { PlanEntity } from '../plan/entities/plan.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { ExamMasterEntity } from './entities/exam-master.entity';
 import { CreateExamMasterResponse } from './responses/create-exam-master.response';
 
 @UseGuards(AuthGuard)
 @Controller('exam-master')
 export class ExamMasterController {
-  constructor(
-    private readonly examMasterService: ExamMasterService,
-  ) {}
+  constructor(private readonly examMasterService: ExamMasterService) {}
 
   @Post()
   async create(@Body() request: CreateExamMasterRequest) {

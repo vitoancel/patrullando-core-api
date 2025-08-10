@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindManyOptions } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { QuestionMasterEntity } from './entities/question-master.entity';
 import { ListQuestionMasterRequest } from './request/list-question-master.request';
 import { ListQuestionMasterPaginationDto } from './dto/list-question-master.dto';
@@ -33,10 +33,7 @@ export class QuestionMasterService {
       relations: ['options', 'category'],
     });
 
-    const total_records: number =
-      await this.questionMasterRepository.count(options);
-
-    response.total_records = total_records;
+    response.total_records = await this.questionMasterRepository.count(options);
     response.dataMapped = data;
     return response;
   }

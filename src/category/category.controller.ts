@@ -15,6 +15,9 @@ import { ListCategoriesResponse } from './responses/list-categories.response';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CategoryEntity } from './entities/category.entity';
+import { CreateExamMasterCategoryRequest } from './requests/create-exam-master-category.request';
+import { CreateExamMasterCategoryResponse } from './responses/create-exam-master-category.response';
+import { CreateExamMasterCategoryMassiveRequest } from './requests/create-exam-master-category-massive.request';
 
 @ApiTags('Categories')
 @Controller('category')
@@ -134,5 +137,66 @@ export class CategoryController {
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.categoryService.remove(id);
+  }
+
+  // EXAM MASTER CATEGORY
+  @ApiOperation({
+    summary: 'CREATE EXAM MASTER CATEGORY',
+    description: 'Create a new category asociated to an exam master',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Category asociated to an exam master created',
+    type: CategoryEntity,
+  })
+  @Post('exam-master-category')
+  async createExamMasterCategory(
+    @Body() request: CreateExamMasterCategoryRequest,
+  ) {
+    const response: CreateExamMasterCategoryResponse =
+      new CreateExamMasterCategoryResponse();
+    const hasBeenCreated: boolean =
+      await this.categoryService.createExamMasterCategory(request);
+
+    if (!hasBeenCreated) {
+      response.status = false;
+      response.message =
+        'Ocurrió un error al asociar la Category al Examen Maestro';
+      return response;
+    }
+
+    response.message = 'Category asociada con éxito';
+
+    return response;
+  }
+
+  @ApiOperation({
+    summary: 'CREATE EXAM MASTER CATEGORY MASSIVE',
+    description: 'Asociate massive categories to an exam master',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Categories asociated to an exam master created',
+    type: CategoryEntity,
+  })
+  @Post('exam-master-category-massive')
+  async createExamMasterCategoryMassive(
+    @Body() request: CreateExamMasterCategoryMassiveRequest,
+  ) {
+    const response: CreateExamMasterCategoryResponse =
+      new CreateExamMasterCategoryResponse();
+    const hasBeenCreated: boolean =
+      await this.categoryService.createExamMasterCategoryMassive(request);
+
+    if (!hasBeenCreated) {
+      response.status = false;
+      response.message =
+        'Ocurrió un error al asociar las Categorias al Examen Maestro';
+      return response;
+    }
+
+    response.message = 'Categorias asociadas con éxito';
+
+    return response;
   }
 }

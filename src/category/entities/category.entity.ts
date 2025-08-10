@@ -22,6 +22,9 @@ export class CategoryEntity {
   @Column({ type: 'smallint', default: 1 })
   status: number;
 
+  @Column({ type: 'smallint', default: 1 })
+  category_type: number;
+
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   creation_date: Date;
 

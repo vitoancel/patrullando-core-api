@@ -5,6 +5,8 @@ import { CategoryEntity } from './entities/category.entity';
 import { ListCategoriesRequest } from './requests/list-categories.request';
 import { ListCategoriesPaginationDto } from './dto/list-category.dto';
 import { ExamMasterCategoryEntity } from './entities/exam-master-category.entity';
+import { CreateExamMasterCategoryRequest } from './requests/create-exam-master-category.request';
+import { CreateExamMasterCategoryMassiveRequest } from './requests/create-exam-master-category-massive.request';
 
 @Injectable()
 export class CategoryService {
@@ -106,6 +108,49 @@ export class CategoryService {
     const result = await this.categoryRepository.delete(id);
     if (!result.affected) {
       throw new NotFoundException(`Category with id ${id} not found`);
+    }
+  }
+
+  // EXAM MASTER CATEGORY
+  async createExamMasterCategory(
+    request: CreateExamMasterCategoryRequest,
+  ): Promise<boolean> {
+    const repository: Repository<ExamMasterCategoryEntity> =
+      this.examMasterCategoryRepository;
+    const newObj: ExamMasterCategoryEntity = new ExamMasterCategoryEntity();
+
+    try {
+      newObj.category.id = request.category_id;
+      newObj.examMaster.id = request.exam_master_id;
+      newObj.num_question = request.num_question;
+
+      const newEntity = repository.create(newObj);
+      await repository.save(newEntity);
+
+      return true;
+    } catch (e) {
+      console.log({ error: e.message });
+
+      return false;
+    }
+  }
+
+  async createExamMasterCategoryMassive(
+    request: CreateExamMasterCategoryMassiveRequest,
+  ): Promise<boolean> {
+    const result: boolean[] = new Array(request.categories.length).fill(false);
+
+    try {
+      for (const category of request.categories) {
+        const index = request.categories.indexOf(category);
+        result[index] = await this.createExamMasterCategory(category);
+      }
+
+      return result.every((value) => value);
+    } catch (e) {
+      console.log({ error: e.message });
+
+      return false;
     }
   }
 }
