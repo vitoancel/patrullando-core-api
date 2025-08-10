@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, In, Repository } from 'typeorm';
 import { CategoryEntity } from './entities/category.entity';
@@ -47,9 +47,7 @@ export class CategoryService {
     console.log({ categoriesByExam });
 
     // Transforma el array de objetos a un array de números
-    const categoryIds: number[] = categoriesByExam.map(
-      (record) => record.id,
-    );
+    const categoryIds: number[] = categoriesByExam.map((record) => record.id);
 
     const whereCondition = {
       ...filters,
@@ -69,24 +67,45 @@ export class CategoryService {
     return { total_records, dataMapped: data };
   }
 
-  // Placeholder methods (not used in current listing pattern)
-  create() {
-    return 'This action adds a new category';
+  // CRUD methods for Category
+  async create(payload: Partial<CategoryEntity>): Promise<CategoryEntity> {
+    const entity = this.categoryRepository.create(payload as CategoryEntity);
+    return this.categoryRepository.save(entity);
   }
 
-  findAll() {
-    return `This action returns all category`;
+  async findAll(): Promise<CategoryEntity[]> {
+    return this.categoryRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: number): Promise<CategoryEntity> {
+    const entity = await this.categoryRepository.findOne({ where: { id } });
+    if (!entity) {
+      throw new NotFoundException(`Category with id ${id} not found`);
+    }
+    return entity;
   }
 
-  update(id: number) {
-    return `This action updates a #${id} category`;
+  async update(
+    id: number,
+    payload: Partial<CategoryEntity>,
+  ): Promise<CategoryEntity> {
+    const entity = await this.findOne(id);
+    const merged = this.categoryRepository.merge(entity, payload);
+    return this.categoryRepository.save(merged);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: number): Promise<void> {
+    // Remove relations to avoid FK constraint issues
+    await this.examMasterCategoryRepository
+      .createQueryBuilder()
+      .delete()
+      .from(ExamMasterCategoryEntity)
+      .where('category_id = :id', { id })
+      .execute();
+
+    const result = await this.categoryRepository.delete(id);
+    if (!result.affected) {
+      throw new NotFoundException(`Category with id ${id} not found`);
+    }
   }
 }
