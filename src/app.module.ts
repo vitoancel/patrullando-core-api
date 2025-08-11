@@ -19,8 +19,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path'; //
 import { FormatsModule } from './formats/formats.module';
 import { RoleHistoryModule } from './role-history/role-history.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { OptionMasterModule } from './option-master/option-master.module';
+import { ConfigModule as ConfigModuleApp } from './config/config.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { OptionMasterModule } from './option-master/option-master.module';
     FormatsModule,
     RoleHistoryModule,
     OptionMasterModule,
+    ConfigModuleApp,
   ],
   controllers: [AppController, UserController],
   providers: [AppService],

@@ -53,4 +53,13 @@ export class PlanController {
 
     return response;
   }
+
+  @Get('actives')
+  async findAllActives() {
+    const response = new AllPlansResponse();
+
+    response.data = await this.planService.findAllActives();
+
+    return response;
+  }
 }

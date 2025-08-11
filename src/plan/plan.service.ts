@@ -46,4 +46,15 @@ export class PlanService {
       },
     });
   }
+
+  async findAllActives() {
+    return await this.planRepository.find({
+      order: {
+        id: 'ASC',
+      },
+      where: {
+        status: 1,
+      },
+    });
+  }
 }
