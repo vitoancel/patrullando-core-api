@@ -1,8 +1,10 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { FormatsService } from './formats.service';
-import { AllFormatsResponse } from './responses/all-formats.response';
+import { AllFormatResponse } from './responses/all-format.response';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ListFormatRequest } from './request/all-format.request';
+import { ListUsersWithSuscriptionResponse } from '../user/responses/list-users-with-suscription.response';
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
@@ -10,11 +12,24 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 export class FormatsController {
   constructor(private readonly formatsService: FormatsService) {}
 
-  @Get()
-  async findAll() {
-    const response = new AllFormatsResponse();
+  @ApiOperation({
+    summary: 'LIST',
+    description: 'Retrieve a list formats',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'List of formats retrieved successfully',
+    type: ListUsersWithSuscriptionResponse,
+  })
+  @Post('list')
+  async findAll(@Body() request: ListFormatRequest) {
+    const response = new AllFormatResponse();
 
-    response.data = await this.formatsService.findAll();
+    const { total_records, dataMapped } =
+      await this.formatsService.findAll(request);
+
+    response.data = dataMapped;
+    response.total_records = total_records;
 
     return response;
   }

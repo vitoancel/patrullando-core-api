@@ -3,7 +3,9 @@ import { QuestionService } from './question.service';
 import { ListQuestionDto } from './dto/list-question.dto';
 import { AllQuestionsResponse } from './responses/all-questions.response';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('question')
 export class QuestionController {

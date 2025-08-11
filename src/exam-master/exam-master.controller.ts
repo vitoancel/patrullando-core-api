@@ -14,7 +14,9 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { ListExamMasterRequest } from './request/list-exam-master.request';
 import { CreateExamMasterRequest } from './request/create-exam-master.request';
 import { CreateExamMasterResponse } from './responses/create-exam-master.response';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('exam-master')
 export class ExamMasterController {

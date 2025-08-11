@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CategoryEntity } from '../../category/entities/category.entity';
 
 @Entity({ name: 'tb_format' })
 export class FormatEntity {
@@ -31,4 +34,18 @@ export class FormatEntity {
 
   @Column({ type: 'int', nullable: true, name: 'update_user' })
   update_user: number;
+
+  @Column({ type: 'int', nullable: false })
+  category_id: number;
+
+  @ManyToOne(() => CategoryEntity, (category) => category.id)
+  @JoinColumn({ name: 'category_id' })
+  category: CategoryEntity;
+
+  get category_name(): string {
+    if (this.category == undefined) {
+      return null;
+    }
+    return this.category.name;
+  }
 }

@@ -11,12 +11,24 @@ import { AllPlansResponse } from './responses/all-plans.response';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { CreatePlanRequest } from './request/create-plan.request';
 import { CreatePlanResponse } from './responses/create-plan.response';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ListUsersWithSuscriptionResponse } from '../user/responses/list-users-with-suscription.response';
 
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('plan')
 export class PlanController {
   constructor(private readonly planService: PlanService) {}
 
+  @ApiOperation({
+    summary: 'CREATE',
+    description: 'Create a new plan in the system',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Create a new plan in the system',
+    type: ListUsersWithSuscriptionResponse,
+  })
   @Post()
   async create(@Body() createPlanRequest: CreatePlanRequest, @Request() req) {
     const response: CreatePlanResponse = new CreatePlanResponse();

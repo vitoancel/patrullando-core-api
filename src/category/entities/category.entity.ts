@@ -2,9 +2,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
 import { ExamMasterCategoryEntity } from './exam-master-category.entity';
 

@@ -9,6 +9,7 @@ export class RoleService {
     @InjectRepository(RoleEntity)
     private readonly roleRepository: Repository<RoleEntity>,
   ) {}
+
   findOne(id: number) {
     return this.roleRepository.findOneBy({ id: id });
   }
